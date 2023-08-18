@@ -1,2 +1,2 @@
 # dcc148
-Material da disciplina DCC148 - Desenvolvimento de Jogos
+Material de apoio à disciplina DCC148 - Desenvolvimento de Jogos
