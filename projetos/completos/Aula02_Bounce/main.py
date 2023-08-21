@@ -54,9 +54,6 @@ if __name__ == '__main__':
     vy = VEL_Y0
 
     clock = pygame.time.Clock()
-    fpsClock = pygame.time.Clock()
-
-    clock.tick()
 
     nframes = 0
     dtAcumulado = 0
