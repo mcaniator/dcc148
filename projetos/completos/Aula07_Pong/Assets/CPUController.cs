@@ -15,7 +15,9 @@ public class CPUController : MonoBehaviour
         ballXPrev = ball.transform.position.x;
 
         // Aqui a velocidade da CPU foi simplesmente definida como a mesma do jogador. Uma forma simples de 
-        // alterar a dificuldade é torná-la mais lenta ou mais rápida.
+        // alterar a dificuldade é torná-la mais lenta ou mais rápida, proporcionalmente à velocidade do
+        // jogador. Outras lógicas também podem ser implementadas, como, por exemplo, introduzir um atraso
+        // na reação.
         speed = player.Speed;
     }
 
