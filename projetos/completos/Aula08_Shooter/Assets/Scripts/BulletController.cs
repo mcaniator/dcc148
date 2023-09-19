@@ -10,13 +10,13 @@ public class BulletController : MonoBehaviour
     void Update()
     {
         transform.Translate(speed*Time.deltaTime, 0, 0);
-        if(transform.position.x > 10)
+        if(transform.position.x > 10 || transform.position.x < -10 || transform.position.y > 5)
             gameObject.SetActive(false);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag != "Player")
+        if(gameObject.tag != other.gameObject.tag)
             gameObject.SetActive(false);
     }
 }
