@@ -7,6 +7,9 @@ public class TurretEnemyController : MonoBehaviour
     private Transform player;
     private Transform cannonBase;
     private Transform cannon;
+    private GameObject bullet;
+
+    private Vector3 pivotToRotatedObject;
 
     // Start is called before the first frame update
     void Start()
@@ -14,8 +17,23 @@ public class TurretEnemyController : MonoBehaviour
         player = GameObject.FindWithTag("Player").GetComponent<Transform>();
         cannonBase = transform.GetChild(0);
         cannon = transform.GetChild(1);
+        bullet = transform.GetChild(2).gameObject;
         // cannon = GetComponentsInChildren<Transform>()[2]; // nesta função, o índice 0 contém o pai
-        Debug.Log(cannon);
+        
+        pivotToRotatedObject = cannon.position - cannonBase.position;
+        bullet.SetActive(false);
+    }
+
+    void Shoot()
+    {
+        if(!bullet.activeSelf)
+        {
+            bullet.SetActive(true);
+            bullet.transform.position = cannon.position;
+            bullet.transform.localRotation = cannon.localRotation;
+            bullet.transform.Rotate(0, 0, 90);
+            bullet.tag = "Enemy";
+        }
     }
 
     // Update is called once per frame
@@ -27,25 +45,36 @@ public class TurretEnemyController : MonoBehaviour
             direction.Normalize();
 
             Quaternion rot = Quaternion.FromToRotation(cannon.up, direction);
-            // Quaternion rot = Quaternion.LookRotation(direction, Vector3.back);
+
+            //=== OPÇÃO 1 ===//
             
-            Vector3 toPivot = new Vector3(0, 0.66f, 0);
+            // Executa as 3 operações indicadas nos slides
 
-            Debug.Log(cannon.localPosition);
-
-            cannon.Translate(-toPivot);
             cannon.localRotation *= rot;
-            cannon.Translate(toPivot);
+            pivotToRotatedObject = rot * pivotToRotatedObject;
+            cannon.position = cannonBase.position + pivotToRotatedObject;
 
-            // transform.localRotation *= rot;
-            // cannonBase.localRotation *= Quaternion.Inverse(rot);
 
-            // Vector3 toPivot = cannon.position - cannonBase.position;
+            //======= OUTRAS SOLUÇÕES =========//
+
+            //=== OPÇÃO 2 ===//
+            
+            // Nesse caso, não atualizamos pivotToRotatedObject, pois usamos a translação segundo
+            // o sistema de coordenadas local do objeto (Space.Self)
+
+            // cannon.Translate(-pivotToRotatedObject);
             // cannon.localRotation *= rot;
-            // toPivot = rot * toPivot;
-            // cannon.position = cannonBase.position + toPivot;
+            // cannon.Translate(pivotToRotatedObject);
 
-            // cannon.RotateAround(cannonBase.position, Vector3.forward, Input.GetAxis("Horizontal"));
+            //=== OPÇÃO 3 ===//
+            
+            // Solução sem quatérnios
+
+            // float angle = Vector2.SignedAngle(cannon.up, direction);
+            // Debug.Log(angle);
+            // cannon.RotateAround(cannonBase.position, Vector3.forward, angle);
+
+            Shoot();
         }
     }
 }
