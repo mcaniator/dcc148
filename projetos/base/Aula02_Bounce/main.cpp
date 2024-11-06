@@ -5,7 +5,6 @@
 
 using namespace std;
 
-const string FONT_PATH = "/usr/share/fonts/TTF/DejaVuSansMono.ttf";
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
 const int BALL_RADIUS = 10;
@@ -20,9 +19,9 @@ std::string converteParaStr(float val)
 int main()
 {
     
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Pong");
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Bounce");
 	sf::Font font;
-    if(!font.loadFromFile(FONT_PATH))
+    if(!font.loadFromFile("DejaVuSansMono.ttf"))
     {
         cout << "Erro ao carregar fonte!" << endl;
         exit(1);
