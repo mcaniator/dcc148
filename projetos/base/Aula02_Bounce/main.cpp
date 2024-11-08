@@ -5,15 +5,55 @@
 
 using namespace std;
 
-const int WINDOW_WIDTH = 800;
-const int WINDOW_HEIGHT = 600;
-const int BALL_RADIUS = 10;
+const int WINDOW_WIDTH = 800;       // largura da janela
+const int WINDOW_HEIGHT = 600;      // altura da janela
+const int BALL_RADIUS = 10;         // raio da bola (para fins de renderização)
+const float VEL_X = 150;            // velocidade de movimentação na horizontal
+const float VEL_Y0 = -700;          // velocidade inicial da bola na vertical
+const float GRAVITY = 1000;         // aceleração da gravidade
+
+const float dtAlvo = 1/60.0;        
 
 std::string converteParaStr(float val)
 {
     stringstream strConv;
 	strConv << (int)val;
     return strConv.str();
+}
+
+void atualiza(sf::CircleShape& ball, float dt, float& vy)
+{
+    // ***************************************************** //
+
+    // INCLUA AQUI O SEU CÓDIGO
+
+    // determina se as setas esquerda e direita do teclado foram pressionadas
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        // INCLUA AQUI INSTRUÇÕES QUE DEVEM SER EXECUTADAS QUANDO O USUÁRIO PRESSIONAR A SETA ESQUERDA DO TECLADO
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        // INCLUA AQUI INSTRUÇÕES QUE DEVEM SER EXECUTADAS QUANDO O USUÁRIO PRESSIONAR A SETA DIREITA DO TECLADO
+    }
+
+
+
+
+    // ***************************************************** //
+}
+
+void renderiza(sf::RenderWindow& window, sf::CircleShape& ball, sf::Text& info)
+{
+    // limpa a tela
+    window.clear(sf::Color::Black);
+
+    // desenha os objetos da cena
+    window.draw(ball);
+    window.draw(info);
+
+    // exibe a cena
+    window.display();
 }
 
 int main()
@@ -35,6 +75,18 @@ int main()
     // inicialização da posição da bola
     ball.setPosition(WINDOW_WIDTH/2, WINDOW_HEIGHT*0.95);
 
+    sf::Clock clock;
+    sf::Clock fpsClock;
+    float tPrev = clock.getElapsedTime().asSeconds();
+    float tNow = tPrev;
+	int nframes = 0;
+    float dtAcumulado = 0;
+    float dt = 0;
+    float dtPendente = 0;
+    float dtFixo = 0.01;
+    
+    float vy = VEL_Y0;
+
     // game loop
     while (window.isOpen())
     {
@@ -47,34 +99,15 @@ int main()
                 window.close();
         }
 
-        // ***************************************************** //
+        tNow = clock.getElapsedTime().asSeconds();
+        dt = tNow - tPrev;
+        dtPendente += dt;
+        tPrev = tNow;
 
-        // INCLUA AQUI O SEU CÓDIGO
+        dtAcumulado += fpsClock.restart().asSeconds();
 
-        // determina se as setas esquerda e direita do teclado foram pressionadas
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        {
-            // INCLUA AQUI INSTRUÇÕES QUE DEVEM SER EXECUTADAS QUANDO O USUÁRIO PRESSIONAR A SETA ESQUERDA DO TECLADO
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        {
-            // INCLUA AQUI INSTRUÇÕES QUE DEVEM SER EXECUTADAS QUANDO O USUÁRIO PRESSIONAR A SETA DIREITA DO TECLADO
-        }
-
-
-
-
-        // ***************************************************** //
-
-        // limpa a tela
-        window.clear(sf::Color::Black);
-
-        // desenha os objetos da cena
-        window.draw(ball);
-        window.draw(info);
-
-        // exibe a cena
-        window.display();
+        atualiza(ball, dt, vy);
+        renderiza(window, ball, info);
     }
     return 0;
 }
