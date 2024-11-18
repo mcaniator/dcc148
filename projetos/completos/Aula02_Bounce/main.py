@@ -1,12 +1,12 @@
 import pygame
 import sys
 
-WINDOW_WIDTH = 800
-WINDOW_HEIGHT = 600
-BALL_RADIUS = 10
-VEL_X = 30.0
-VEL_Y0 = -700.0
-ACCEL = 1000.0
+WINDOW_WIDTH = 800          # largura da janela
+WINDOW_HEIGHT = 600         # altura da janela
+BALL_RADIUS = 10            # raio da bola (para fins de renderização)
+VEL_X = 150.0               # velocidade da bola na horizontal
+VEL_Y0 = -700.0             # velocidade inicial da bola na vertical
+GRAVITY = 1000.0            # aceleração da gravidade
 
 def atualiza(ball, dt, vy):
     # determina se as setas esquerda e direita do teclado foram pressionadas
@@ -16,11 +16,13 @@ def atualiza(ball, dt, vy):
     if keys[pygame.K_RIGHT]:
         ball[0] += VEL_X*dt
         
-    vy += ACCEL*dt
-    if ball[1] > WINDOW_HEIGHT*0.95:
-        vy = -vy
-
+    vy += GRAVITY*dt
     ball[1] += vy*dt
+    
+    if ball[1] > WINDOW_HEIGHT*0.95:
+        ball[1] = WINDOW_HEIGHT*0.95
+        vy = VEL_Y0
+
     return vy
 
 def renderiza(window, ball, font, info):

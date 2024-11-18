@@ -8,9 +8,9 @@ using namespace std;
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
 const int BALL_RADIUS = 10;
-const float VEL_X = 30;
+const float VEL_X = 150;
 const float VEL_Y0 = -700;
-const float ACCEL = 1000;
+const float GRAVITY = 1000;
 
 const float dtAlvo = 1/60.0;
 
@@ -29,11 +29,14 @@ void atualiza(sf::CircleShape& ball, float dt, float& vy)
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         ball.move(VEL_X*dt, 0);
 
-    vy += ACCEL*dt;
-    if(ball.getPosition().y > WINDOW_HEIGHT*0.95)
-        vy = -vy;
-
+    vy += GRAVITY*dt;
     ball.move(0, vy*dt);
+    
+    if(ball.getPosition().y > WINDOW_HEIGHT*0.95)
+    {
+		ball.setPosition(ball.getPosition().x, WINDOW_HEIGHT*0.95);
+	    vy = VEL_Y0;
+    }
 }
 
 void atualizaFPS(sf::Text& info, float& dt, int& nframes)
@@ -115,23 +118,25 @@ int main()
         tPrev = tNow;
 
         dtAcumulado += fpsClock.restart().asSeconds();
+        
+        if(lag)
+        {
+            sf::sleep(sf::seconds(0.5));
+        }
 
-        const int MAX_ITER = 5;
+        /*const int MAX_ITER = 5;
         int i = 0;
         while(dtPendente >= dtFixo && i < MAX_ITER)
         {
             atualiza(ball, dtFixo, vy);
-            if(lag)
-            {
-                sf::sleep(sf::seconds(0.01));
-            }
+            
             dtPendente -= dtFixo;
             i++;
-        }
-        // atualiza(ball, dt, vy);
+        }*/
+        atualiza(ball, dt, vy);
 	    atualizaFPS(info, dtAcumulado, nframes);
         renderiza(window, ball, info);
-        // window.setFramerateLimit(60);
+        //window.setFramerateLimit(60);
     }
     return 0;
 }
