@@ -1,37 +1,48 @@
 import pygame
 import sys
 
-WINDOW_WIDTH = 800          # largura da janela
-WINDOW_HEIGHT = 600         # altura da janela
-BALL_RADIUS = 10            # raio da bola (para fins de renderização)
-VEL_X = 150.0               # velocidade da bola na horizontal
-VEL_Y0 = -700.0             # velocidade inicial da bola na vertical
-GRAVITY = 1000.0            # aceleração da gravidade
+from bola import Bola
+from dt import ControleDelta
 
-def atualiza(ball, dt, vy):
+LARGURA_JANELA = 800        # largura da janela
+ALTURA_JANELA = 600         # altura da janela
+CHAO = ALTURA_JANELA * 0.95 # ponto onde a bola quica
+RAIO_BOLA = 10              # raio da bola (para fins de renderização)
+VEL_X = 150.0               # velocidade da bola na horizontal
+VEL_Y0 = -700.0             # velocidade inicial da bola no eixo y
+GRAVIDADE = 1000.0          # aceleração da gravidade
+
+def atualiza(bola, dt):
+    
+    # obtém as coordenadas x e y da posição da bola, e a velocidade da bola no eixo y
+    x, y = bola.getPosicao()
+    vy = bola.getVelY()
+
     # determina se as setas esquerda e direita do teclado foram pressionadas
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        ball[0] -= VEL_X*dt
+        x -= VEL_X*dt
     if keys[pygame.K_RIGHT]:
-        ball[0] += VEL_X*dt
+        x += VEL_X*dt
         
-    vy += GRAVITY*dt
-    ball[1] += vy*dt
+    vy += GRAVIDADE*dt
+    y += vy*dt
     
-    if ball[1] > WINDOW_HEIGHT*0.95:
-        ball[1] = WINDOW_HEIGHT*0.95
+    if y > CHAO:
+        y = CHAO
         vy = VEL_Y0
 
-    return vy
+    # atualiza as coordenadas x e y da posição da bola, e a velocidade da bola no eixo y
+    bola.setPosicao(x, y)
+    bola.setVelY(vy)
 
-def renderiza(window, ball, font, info):
+def renderiza(window, bola, font, info):
     # limpa a tela
     window.fill((0, 0, 0))
 
     # desenha os objetos da cena
     white = (255, 255, 255)
-    pygame.draw.circle(window, white, (ball[0], ball[1]), BALL_RADIUS)
+    pygame.draw.circle(window, white, (bola.getX(), bola.getY()), RAIO_BOLA)
 
     img = font.render(info, True, white)
     window.blit(img, (5, 5))
@@ -44,24 +55,19 @@ def renderiza(window, ball, font, info):
 if __name__ == '__main__':
     pygame.init()
 
-    window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+    window = pygame.display.set_mode((LARGURA_JANELA, ALTURA_JANELA))
     pygame.display.set_caption('Bounce')
 
     font = pygame.font.SysFont('DejaVuSansMono.ttf', 36)
     fpsInfo = ''
 
-    # definindo a bola como uma lista de 2 elementos, que representam o par de coordenadas (x, y)
-    ball = [WINDOW_WIDTH / 2, WINDOW_HEIGHT * 0.95]
-
-    vy = VEL_Y0
+    # chama o construtor da classe Bola, posicionando-a inicialmente no centro da tela (em x) e na altura do chão, 
+    # com velocidade inicial em y igual a VEL_Y0
+    bola = Bola(LARGURA_JANELA / 2, CHAO, VEL_Y0)
 
     clock = pygame.time.Clock()
 
-    nframes = 0
-    dtAcumulado = 0
-    dt = 0
-    dtPendente = 0
-    dtFixo = 0.01
+    controle = ControleDelta(atualiza);  
 
     lag = False
 
@@ -76,29 +82,14 @@ if __name__ == '__main__':
             
             if event.type == pygame.KEYDOWN: 
                 if event.key == pygame.K_l:
-                    lag = not lag
+                    controle.alternaLag()
+                elif event.key >= pygame.K_0 and event.key <= pygame.K_4:
+                    controle.alternaMetodo(event.key)
+                
 
         clock.tick()
         dt = clock.get_time() / 1000.0
-        dtPendente += dt
-        dtAcumulado += dt
-
-        MAX_ITER = 5
-        i = 0
-        while dtPendente >= dtFixo and i < MAX_ITER:
-            vy = atualiza(ball, dtFixo, vy)
-            if lag:
-                pygame.time.delay(10) # 10 milissegundos
-
-            dtPendente -= dtFixo
-            i += 1
         
-        nframes += 1
-        if dtAcumulado >= 1:
-            currentFps = nframes / dtAcumulado
-            
-            fpsInfo = str(int(currentFps))
-            nframes = 0
-            dtAcumulado = 0
-
-        renderiza(window, ball, font, fpsInfo)
+        controle.exec(bola, dt)
+        fpsInfo = str(int(controle.calculaFPS(dt)))
+        renderiza(window, bola, font, fpsInfo)
