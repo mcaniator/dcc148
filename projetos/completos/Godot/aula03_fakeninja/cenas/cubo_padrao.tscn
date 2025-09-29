@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://chwm1cov10pye"]
+
+[ext_resource type="Material" uid="uid://oi7b6twcfrij" path="res://materiais/padrao.tres" id="1_h6wct"]
+
+[node name="CuboPadrao" type="CSGBox3D"]
+material_override = ExtResource("1_h6wct")
