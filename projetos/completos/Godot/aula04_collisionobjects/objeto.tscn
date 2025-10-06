@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dm8grv1yktoc7"]
+
+[ext_resource type="Script" uid="uid://b4k1x5dh0tyt4" path="res://objeto.gd" id="1_hew6i"]
+[ext_resource type="Texture2D" uid="uid://234jd4vi1xns" path="res://objeto.png" id="1_wm8r3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wm8r3"]
+font_size = 32
+font_color = Color(0, 0, 0, 1)
+
+[node name="Objeto" type="Node2D"]
+script = ExtResource("1_hew6i")
+velocidade = 10.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_wm8r3")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.5
+offset_top = -11.5
+offset_right = 20.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "TIPO"
+label_settings = SubResource("LabelSettings_wm8r3")

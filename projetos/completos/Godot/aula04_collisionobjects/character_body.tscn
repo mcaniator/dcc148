@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqal8rmpdaxha"]
+
+[ext_resource type="PackedScene" uid="uid://dm8grv1yktoc7" path="res://objeto.tscn" id="1_4joeo"]
+[ext_resource type="Script" uid="uid://dtj0t0skhkrmq" path="res://character_body.gd" id="1_l2fv6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l2fv6"]
+
+[node name="CharacterBody" type="CharacterBody2D"]
+script = ExtResource("1_l2fv6")
+
+[node name="Objeto" parent="." instance=ExtResource("1_4joeo")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(19.56, 3.24)
+shape = SubResource("RectangleShape2D_l2fv6")
