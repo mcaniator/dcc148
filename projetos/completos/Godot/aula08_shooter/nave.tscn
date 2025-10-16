@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3042qvuxvat2"]
+
+[ext_resource type="Script" uid="uid://n83lreeh0hpy" path="res://nave.gd" id="1_ilgfq"]
+[ext_resource type="Texture2D" uid="uid://crhlwsu65oqcp" path="res://tiny_ship.png" id="1_ltewx"]
+[ext_resource type="PackedScene" uid="uid://bpg2ih55uv52v" path="res://tiro.tscn" id="4_jemat"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ltewx"]
+radius = 6.0
+
+[node name="Nave" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_ilgfq")
+velocidade = 300.0
+objeto = ExtResource("4_jemat")
+num_objetos = 10
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ltewx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ltewx")
+
+[node name="ObjectPool" type="Node" parent="."]
