@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7tkdnfilxlea"]
+
+[ext_resource type="PackedScene" uid="uid://c1j48gdi2f4tj" path="res://jogador.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://dq2aj823weudq" path="res://inimigo.tscn" id="2_0xm2m"]
+
+[node name="Main" type="Node"]
+
+[node name="Jogador" parent="." instance=ExtResource("1_ig7tw")]
+position = Vector2(943, 402)
+impulso = -1300.0
+
+[node name="BolaSuperior" parent="." instance=ExtResource("2_0xm2m")]
+modulate = Color(1, 1, 0, 1)
+position = Vector2(0, 262)
+
+[node name="BolaInferior" parent="." instance=ExtResource("2_0xm2m")]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(0, 590)
+velocidade = 150.0

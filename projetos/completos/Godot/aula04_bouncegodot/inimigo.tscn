@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dq2aj823weudq"]
+
+[ext_resource type="Script" uid="uid://cb6ejsfvj8gi0" path="res://inimigo.gd" id="1_030df"]
+[ext_resource type="Texture2D" uid="uid://5sh0ahuhn8ve" path="res://bola.png" id="2_0b8xr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0b8xr"]
+radius = 17.2627
+
+[node name="Inimigo" type="Area2D"]
+script = ExtResource("1_030df")
+velocidade = 200.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_0b8xr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0b8xr")
