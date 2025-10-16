@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxduckf4mwug4"]
+
+[ext_resource type="Script" uid="uid://cf0qta7otnxry" path="res://bola.gd" id="1_6ycda"]
+[ext_resource type="Texture2D" uid="uid://bwlv1afp4alea" path="res://bola.png" id="1_c0eli"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c0eli"]
+radius = 24.1868
+
+[node name="Bola" type="CharacterBody2D"]
+script = ExtResource("1_6ycda")
+velocidade = 300.0
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 0, 0, 1)
+texture = ExtResource("1_c0eli")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_c0eli")
