@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://btljqyynqir3r"]
+
+[ext_resource type="Script" uid="uid://bwi0y8vcjwaic" path="res://tela_inicial.gd" id="1_g50o1"]
+[ext_resource type="Texture2D" uid="uid://c84ihewhf1h0" path="res://background.jpg" id="1_qtomq"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g50o1"]
+texture = ExtResource("1_qtomq")
+
+[sub_resource type="LabelSettings" id="LabelSettings_qtomq"]
+font_size = 100
+font_color = Color(1, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g50o1"]
+bg_color = Color(0.197937, 0.197937, 0.197937, 1)
+expand_margin_left = 45.0
+expand_margin_right = 45.0
+
+[node name="TelaInicial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g50o1")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_g50o1")
+
+[node name="Label" type="Label" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "BOUNCE"
+label_settings = SubResource("LabelSettings_qtomq")
+
+[node name="Button" type="Button" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_g50o1")
+text = "Iniciar"
+
+[connection signal="pressed" from="PanelContainer/Button" to="." method="_on_button_pressed"]
