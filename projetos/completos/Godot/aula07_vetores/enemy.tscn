@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://djvaissg3nxh0"]
+
+[ext_resource type="Script" uid="uid://obbpa521i3mk" path="res://enemy.gd" id="1_4gyqm"]
+[ext_resource type="Texture2D" uid="uid://dcsh80ktkhymf" path="res://icon.svg" id="1_7k104"]
+
+[node name="Enemy" type="Sprite2D"]
+self_modulate = Color(1, 0, 0, 1)
+texture = ExtResource("1_7k104")
+script = ExtResource("1_4gyqm")
+velocidade = 200.0
+
+[node name="Topo" type="Marker2D" parent="."]
+position = Vector2(1041, 35)
+
+[node name="Base" type="Marker2D" parent="."]
+position = Vector2(1044, 579)
