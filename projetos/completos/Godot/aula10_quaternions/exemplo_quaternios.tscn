@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2137cdap3ftx"]
+
+[ext_resource type="Script" uid="uid://b4qb8qefpiuvl" path="res://cubo.gd" id="1_xn2ta"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xn2ta"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xn2ta"]
+
+[sub_resource type="Sky" id="Sky_fwbo2"]
+sky_material = SubResource("ProceduralSkyMaterial_xn2ta")
+
+[sub_resource type="Environment" id="Environment_xn2ta"]
+sky = SubResource("Sky_fwbo2")
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+
+[node name="ExemploQuaternios" type="Node3D"]
+
+[node name="Cubo" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.02219)
+rotation_edit_mode = 1
+material = SubResource("StandardMaterial3D_xn2ta")
+script = ExtResource("1_xn2ta")
+velocidade = 1.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+environment = SubResource("Environment_xn2ta")
+
+[node name="Pivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="Target" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.34924, -1.10523)
