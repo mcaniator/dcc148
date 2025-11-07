@@ -2,11 +2,12 @@ extends CSGBox3D
 
 @export var velocidade : float
 @onready var pivot: Marker3D = $"../Pivot"
-@onready var target: Marker3D = $"../Target"
+
+var rotacionar = false
 
 func _process(delta: float) -> void:
 	# EXEMPLO 1: gerando quatérnio a partir de ângulos de Euler
-	#var dx = Input.get_axis("ui_left", "ui_right")
+	var dx = Input.get_axis("ui_left", "ui_right")
 	#var dy = Input.get_axis("ui_bottom", "ui_up")
 	#var dz = 1
 	#
@@ -18,7 +19,7 @@ func _process(delta: float) -> void:
 	#quaternion *= Quaternion.from_euler(rot)
 	
 	var eixo_rotacao = Vector3(1, 0, 0).normalized()
-	var angulo = deg_to_rad(45)
+	var angulo = deg_to_rad(-45)
 	
 	# EXEMPLO 2: gerando quatérnio a partir de um eixo de rotação e um ângulo
 	#var q = Quaternion(eixo_rotacao, angulo)
@@ -39,14 +40,19 @@ func _process(delta: float) -> void:
 	#print("Depois: ", pos)
 	
 	# EXEMPLO 4: rotacionando um objeto em torno de um ponto
-	position = Vector3(0, 0, 2)
-	quaternion = Quaternion.IDENTITY
+	if Input.is_key_pressed(KEY_SPACE):
+		rotacionar = true
 	
-	print(target.position)
-	var qr = Quaternion(position, target.position)
-	var v = position - pivot.position
-	
-	quaternion = quaternion * qr
-	var vr = qr * v
-	position = position + vr
+	if rotacionar:
+		#position = Vector3(0, 0, 2)
+		#quaternion = Quaternion.IDENTITY
+		
+		var vp = position - pivot.position
+		var qr = Quaternion(eixo_rotacao, dx * delta)
+		
+		quaternion = quaternion * qr
+		var vr = qr * vp
+		position = pivot.position + vr
+		
+		print("Resultado: ", position)
 	
