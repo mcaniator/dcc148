@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://ba2kihbsx8d7y"]
+
+[ext_resource type="Texture2D" uid="uid://btabqrqjuumnw" path="res://icon.svg" id="1_ig7tw"]
+[ext_resource type="Texture2D" uid="uid://cs8bfup8ukmfb" path="res://Full-Background.png" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://yss0vpu83a6v" path="res://camera_2d.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://b3f6eao3dkuem" path="res://player.gd" id="4_lquwl"]
+
+[node name="Main" type="Node"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -579.0
+offset_top = -591.0
+offset_right = 1279.0
+offset_bottom = 339.0
+texture = ExtResource("3_h2yge")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Player" type="Sprite2D" parent="."]
+position = Vector2(-462, 156)
+texture = ExtResource("1_ig7tw")
+script = ExtResource("4_lquwl")
+speed = 500.0
+jump = -1200.0
+gravity = 3000.0
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+limit_left = -570
+limit_right = 1271
+script = ExtResource("4_1bvp3")
+scroll_speed = 100.0
+player = NodePath("../Player")
