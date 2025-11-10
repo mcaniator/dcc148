@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://eifx2psvh3p6"]
+
+[ext_resource type="Texture2D" uid="uid://dff0j2bkbg61p" path="res://Free mountain background/Transparent PNG/Full-Background.png" id="1_odi28"]
+[ext_resource type="Texture2D" uid="uid://cwodftjpyhat3" path="res://icon.svg" id="2_g12ht"]
+[ext_resource type="Script" uid="uid://cil0mg2y017wt" path="res://player.gd" id="3_hun6b"]
+
+[node name="TesteParallax" type="Node2D"]
+
+[node name="Cenario" type="Node2D" parent="."]
+scale = Vector2(0.45, 0.45)
+
+[node name="TextureRect" type="TextureRect" parent="Cenario"]
+offset_right = 3072.0
+offset_bottom = 1536.0
+texture = ExtResource("1_odi28")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(107, 540)
+texture = ExtResource("2_g12ht")
+script = ExtResource("3_hun6b")
+speed = 500.0
+jump = 1500.0
+gravity = 3000.0
+
+[node name="Camera2D" type="Camera2D" parent="Sprite2D"]
+position = Vector2(-107, -540)
+anchor_mode = 0
+limit_left = 0
+limit_right = 1380
