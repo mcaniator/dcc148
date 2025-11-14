@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://eifx2psvh3p6"]
+
+[ext_resource type="Texture2D" uid="uid://dlcj6t7dq8m5w" path="res://Free mountain background/Transparent PNG/layer-1-sky.png" id="1_6o7pg"]
+[ext_resource type="Script" uid="uid://cyev6x10snc4h" path="res://camera_2d.gd" id="1_hun6b"]
+[ext_resource type="Texture2D" uid="uid://284pyeinfgww" path="res://Free mountain background/Transparent PNG/layer-2-mountain.png" id="2_g12ht"]
+[ext_resource type="Texture2D" uid="uid://b08mvum8bnxyx" path="res://Free mountain background/Transparent PNG/layer-3-ground.png" id="3_hun6b"]
+
+[node name="TesteParallax" type="Node2D"]
+
+[node name="Parallax" type="Node2D" parent="."]
+
+[node name="Parallax2D" type="Parallax2D" parent="Parallax"]
+scale = Vector2(0.45, 0.45)
+scroll_scale = Vector2(0.1, 0.1)
+repeat_size = Vector2(3072, 0)
+autoscroll = Vector2(-5, 0)
+
+[node name="TextureRect" type="TextureRect" parent="Parallax/Parallax2D"]
+offset_left = 2.0
+offset_right = 3074.0
+offset_bottom = 1536.0
+texture = ExtResource("1_6o7pg")
+metadata/_edit_use_anchors_ = true
+
+[node name="Parallax2D2" type="Parallax2D" parent="Parallax"]
+scale = Vector2(0.45, 0.45)
+scroll_scale = Vector2(0.3, 0.3)
+repeat_size = Vector2(3072, 0)
+
+[node name="TextureRect" type="TextureRect" parent="Parallax/Parallax2D2"]
+offset_left = 8.66667
+offset_right = 3080.67
+offset_bottom = 1536.0
+texture = ExtResource("2_g12ht")
+metadata/_edit_use_anchors_ = true
+
+[node name="Parallax2D3" type="Parallax2D" parent="Parallax"]
+scale = Vector2(0.45, 0.45)
+repeat_size = Vector2(3072, 0)
+
+[node name="TextureRect" type="TextureRect" parent="Parallax/Parallax2D3"]
+offset_left = 2.0
+offset_right = 3074.0
+offset_bottom = 1536.0
+texture = ExtResource("3_hun6b")
+metadata/_edit_use_anchors_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+script = ExtResource("1_hun6b")
+speed = 500.0
