@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://u60jxnmlisqu"]
+
+[ext_resource type="Script" uid="uid://bschv72cwcevn" path="res://player.gd" id="1_3w8p6"]
+[ext_resource type="Script" uid="uid://q0auem4cogd0" path="res://fps.gd" id="1_pkv5w"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_crxtf"]
+
+[sub_resource type="Environment" id="Environment_crxtf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3w8p6"]
+font_size = 25
+font_color = Color(1, 0, 0, 1)
+
+[node name="FPS" type="Node"]
+script = ExtResource("1_pkv5w")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+mesh = SubResource("PlaneMesh_crxtf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.00678923, 0.999977, 0, -0.999977, 0.00678923, 0, 3.88946, 0)
+
+[node name="Player" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.913822, 2.35671)
+environment = SubResource("Environment_crxtf")
+script = ExtResource("1_3w8p6")
+eye_speed = 1.0
+speed = 10.0
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -17.5
+offset_right = 8.0
+offset_bottom = 17.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "X"
+label_settings = SubResource("LabelSettings_3w8p6")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

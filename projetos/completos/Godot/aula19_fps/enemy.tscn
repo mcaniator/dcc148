@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7isc5yb4r4ef"]
+
+[ext_resource type="Script" uid="uid://oegw281iau2q" path="res://enemy.gd" id="1_7k104"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_7xaro"]
+lightmap_size_hint = Vector2i(14, 21)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7xaro"]
+
+[node name="Enemy" type="Area3D"]
+script = ExtResource("1_7k104")
+speed = 5.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_7xaro")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_7xaro")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
