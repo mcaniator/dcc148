@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://byhj85yskel0"]
+
+[ext_resource type="Script" uid="uid://bp13mb0h0f2sl" path="res://scripts/cellular_automata.gd" id="1_t2mcb"]
+[ext_resource type="TileSet" uid="uid://bjg5a3j1unv1x" path="res://art/tilesets/rock_tiles.tres" id="2_e7iff"]
+
+[node name="CellularAutomata" type="Node"]
+script = ExtResource("1_t2mcb")
+max_steps = 1
+map_size = 20
+neighborhood_size = 1
+neighborhood_type = 1
+neighborhood_threshold = 3
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("2_e7iff")
