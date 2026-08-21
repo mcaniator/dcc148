@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://5dnmfbhgtwtw"]
+
+[ext_resource type="PackedScene" uid="uid://dm8grv1yktoc7" path="res://objeto.tscn" id="1_blx4s"]
+[ext_resource type="Script" uid="uid://t2b0i4kco83a" path="res://rigid_body.gd" id="1_x72t0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x72t0"]
+
+[node name="RigidBody" type="RigidBody2D"]
+script = ExtResource("1_x72t0")
+
+[node name="Objeto" parent="." instance=ExtResource("1_blx4s")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(19.72, 3.24)
+shape = SubResource("RectangleShape2D_x72t0")

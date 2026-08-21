@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://odgl4872oxeq"]
+
+[ext_resource type="PackedScene" uid="uid://cyicqmlk81rwr" path="res://area.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://bwy06lrlelv8x" path="res://main.gd" id="1_lquwl"]
+[ext_resource type="PackedScene" uid="uid://bqal8rmpdaxha" path="res://character_body.tscn" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://c5xh74ybub066" path="res://static_body.tscn" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://5dnmfbhgtwtw" path="res://rigid_body.tscn" id="4_7mycd"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_lquwl")
+
+[node name="Area" parent="." instance=ExtResource("1_ig7tw")]
+position = Vector2(204, 141)
+
+[node name="Area2" parent="." instance=ExtResource("1_ig7tw")]
+position = Vector2(938, 142)
+
+[node name="CharacterBody" parent="." instance=ExtResource("2_1bvp3")]
+position = Vector2(205, 242)
+
+[node name="CharacterBody2" parent="." instance=ExtResource("2_1bvp3")]
+position = Vector2(937, 241)
+
+[node name="StaticBody" parent="." instance=ExtResource("3_lquwl")]
+position = Vector2(204, 346)
+
+[node name="StaticBody2" parent="." instance=ExtResource("3_lquwl")]
+position = Vector2(941, 350)
+
+[node name="RigidBody" parent="." instance=ExtResource("4_7mycd")]
+position = Vector2(205, 451)
+gravity_scale = 0.0
+
+[node name="RigidBody2" parent="." instance=ExtResource("4_7mycd")]
+position = Vector2(946, 453)
+gravity_scale = 0.0

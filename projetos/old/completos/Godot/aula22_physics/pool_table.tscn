@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://ccgungo6i1qmt"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ba4mr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_33hvx"]
+albedo_color = Color(7.27978e-07, 0.277685, 2.40654e-08, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_33hvx"]
+material = SubResource("StandardMaterial3D_33hvx")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hijxb"]
+albedo_color = Color(0.367107, 0.181962, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hijxb"]
+material = SubResource("StandardMaterial3D_hijxb")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_33hvx"]
+size = Vector3(0.115692, 0.205521, 3.04077)
+
+[sub_resource type="HeightMapShape3D" id="HeightMapShape3D_33hvx"]
+
+[node name="PoolTable" type="StaticBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_ba4mr")
+
+[node name="Base" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 0.102, 0, 0, 0, 3.061, 0, 0, 0)
+mesh = SubResource("BoxMesh_33hvx")
+
+[node name="LeftWall" type="MeshInstance3D" parent="Base"]
+transform = Transform3D(0.0426852, 0, 0, 0, 2.23711, 0, 0, 0, 1, -0.522656, 0.691798, 0)
+mesh = SubResource("BoxMesh_hijxb")
+
+[node name="RightWall" type="MeshInstance3D" parent="Base"]
+transform = Transform3D(0.0426852, 0, 0, 0, 2.23711, 0, 0, 0, 1, 0.523, 0.692, 0)
+mesh = SubResource("BoxMesh_hijxb")
+
+[node name="FrontWall" type="MeshInstance3D" parent="Base"]
+transform = Transform3D(-1.86583e-09, 0, 1.08767, 0, 2.23711, 0, -0.0426852, 0, -4.75434e-08, -0.000109054, 0.655161, 0.521548)
+mesh = SubResource("BoxMesh_hijxb")
+
+[node name="BackWall" type="MeshInstance3D" parent="Base"]
+transform = Transform3D(-1.86583e-09, 0, 1.08767, 0, 2.23711, 0, -0.0426852, 0, -4.75434e-08, 0, 0.655, -0.522)
+mesh = SubResource("BoxMesh_hijxb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.03192, 0.0634689, 0.0267334)
+shape = SubResource("BoxShape3D_33hvx")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.0421633, 0.0634689, 1.60443)
+shape = SubResource("BoxShape3D_33hvx")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.0421633, 0.0634689, -1.58651)
+shape = SubResource("BoxShape3D_33hvx")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05263, 0.0634689, 0.0267334)
+shape = SubResource("BoxShape3D_33hvx")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.0504707, 0)
+shape = SubResource("HeightMapShape3D_33hvx")

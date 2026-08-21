@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dki2tcdxjfxg7"]
+
+[ext_resource type="PackedScene" uid="uid://eu58lvst4vl3" path="res://nave.tscn" id="1_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://4puue28frv2k" path="res://inimigo_simples.tscn" id="2_lquwl"]
+[ext_resource type="PackedScene" uid="uid://bciagmbwx4m48" path="res://inimigo_r.tscn" id="3_7mycd"]
+[ext_resource type="PackedScene" uid="uid://cat0ibha26wcp" path="res://inimigo_z.tscn" id="4_272bh"]
+
+[node name="Main" type="Node"]
+
+[node name="Nave" parent="." instance=ExtResource("1_1bvp3")]
+
+[node name="InimigoSimples" parent="." instance=ExtResource("2_lquwl")]
+position = Vector2(881, 109)
+
+[node name="InimigoR" parent="." instance=ExtResource("3_7mycd")]
+position = Vector2(878, 253)
+velocidade = 200.0
+frequencia = 2.0
+amplitude = 200.0
+posicao_central = 300.0
+
+[node name="InimigoZ" parent="." instance=ExtResource("4_272bh")]
+position = Vector2(879, 398)

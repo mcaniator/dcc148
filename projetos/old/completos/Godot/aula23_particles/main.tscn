@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://cpn3ohuct1y7e"]
+
+[ext_resource type="PackedScene" uid="uid://bawlshe5gt0gu" path="res://particle_system.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://bqtybw5ge1wco" path="res://particle.tscn" id="2_0xm2m"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_h2yge"]
+rayleigh_coefficient = 1.0
+energy_multiplier = 5.41
+
+[sub_resource type="Sky" id="Sky_1bvp3"]
+sky_material = SubResource("PhysicalSkyMaterial_h2yge")
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 2
+sky = SubResource("Sky_1bvp3")
+
+[node name="Main" type="Node"]
+
+[node name="ParticleSystem" parent="." instance=ExtResource("1_ig7tw")]
+particle_scene = ExtResource("2_0xm2m")
+number_of_particles = 100
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.37275, 5.05785)
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.0465834, 0.998914, 0, -0.998914, -0.0465834, 0, 0, 0)
+shadow_enabled = true

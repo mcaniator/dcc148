@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqtybw5ge1wco"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qa6nv"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_qa6nv"]
+material = SubResource("StandardMaterial3D_qa6nv")
+
+[node name="Particle" type="MeshInstance3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("QuadMesh_qa6nv")

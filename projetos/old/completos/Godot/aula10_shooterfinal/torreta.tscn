@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://tulfgtp133xf"]
+
+[ext_resource type="Texture2D" uid="uid://y6tws80f7oi7" path="res://barra.png" id="1_k81vp"]
+[ext_resource type="Script" uid="uid://dkfutt8456nb4" path="res://torreta.gd" id="1_ythaa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ythaa"]
+size = Vector2(136, 104)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lbhte"]
+size = Vector2(54, 152)
+
+[node name="Torreta" type="Area2D"]
+script = ExtResource("1_ythaa")
+velocidade = 1.0
+metadata/_edit_group_ = true
+
+[node name="Base" type="Sprite2D" parent="."]
+self_modulate = Color(0.205117, 0.205117, 0.205117, 1)
+scale = Vector2(2.41379, 0.473684)
+texture = ExtResource("1_k81vp")
+
+[node name="Canhao" type="Sprite2D" parent="."]
+self_modulate = Color(0.691357, 0.691357, 0.691357, 1)
+z_index = -1
+z_as_relative = false
+position = Vector2(0, -97)
+texture = ExtResource("1_k81vp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ythaa")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, -132)
+shape = SubResource("RectangleShape2D_lbhte")

@@ -1,0 +1,2 @@
+Rock Tileset: sithoius (https://opengameart.org/content/rock-tileset)
+Modelo 3D do robô: @arianagchow (https://godotengine.org/asset-library/asset/1467)

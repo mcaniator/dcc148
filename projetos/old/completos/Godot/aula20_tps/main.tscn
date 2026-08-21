@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqprtogy7avm"]
+
+[ext_resource type="Script" uid="uid://bmq1oih8kloao" path="res://main.gd" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://c22lthalv5a4j" path="res://3D-Godot-Robot-Platformer-Character-fecf5b23e825cabedb9a6c9872d03ee57b5fdd61/3DGodotRobot.glb" id="1_ig7tw"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0xm2m"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_0xm2m")
+speed = 10.0
+turn_speed = 2.0
+
+[node name="Player" parent="." instance=ExtResource("1_ig7tw")]
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.17115, -2.73347)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.0414049, 0.999142, 0, -0.999142, -0.0414049, 0, 0, 0)
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("PlaneMesh_0xm2m")

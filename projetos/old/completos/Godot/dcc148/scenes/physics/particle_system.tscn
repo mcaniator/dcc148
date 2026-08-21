@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5k0j6ujcq5gl"]
+
+[ext_resource type="Script" uid="uid://46g37hcw4lk6" path="res://scripts/particle_system.gd" id="1_ia6ri"]
+[ext_resource type="PackedScene" uid="uid://dfct5iibbmn1w" path="res://scenes/physics/particle.tscn" id="2_r6ico"]
+
+[node name="ParticleSystem" type="Node3D"]
+script = ExtResource("1_ia6ri")
+particle_scene = ExtResource("2_r6ico")
+number_of_particles = 100

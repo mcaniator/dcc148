@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://dus78hw3g2384"]
+
+[ext_resource type="Script" uid="uid://dhtf4qvafrcid" path="res://scenes/base_slide.gd" id="1_qulf5"]
+[ext_resource type="Texture2D" uid="uid://no7wpgrcbn5v" path="res://art/ logo_ufjf_v12.png" id="1_tpx5m"]
+[ext_resource type="Texture2D" uid="uid://buif4l6w5nx2r" path="res://art/logo_dcc.png" id="2_dxboq"]
+
+[sub_resource type="SystemFont" id="SystemFont_qulf5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_aegcr"]
+font = SubResource("SystemFont_qulf5")
+font_size = 50
+shadow_size = 0
+
+[node name="BaseSlide" type="Control" unique_id=1563686099]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qulf5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1161190301]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Header" type="ColorRect" parent="VBoxContainer" unique_id=717209895]
+custom_minimum_size = Vector2(960, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.7921569, 0, 0, 1)
+
+[node name="Body" type="ColorRect" parent="VBoxContainer" unique_id=458853693]
+custom_minimum_size = Vector2(960, 520)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Footer" type="ColorRect" parent="VBoxContainer" unique_id=2082192518]
+custom_minimum_size = Vector2(960, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.072842635, 0.072842635, 0.072842635, 1)
+
+[node name="UFJF" type="TextureRect" parent="." unique_id=1659605147]
+layout_mode = 0
+offset_left = 980.0
+offset_top = 25.0
+offset_right = 1200.0
+offset_bottom = 223.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_tpx5m")
+stretch_mode = 2
+
+[node name="DCC" type="TextureRect" parent="." unique_id=1457601993]
+layout_mode = 0
+offset_left = 1039.0
+offset_top = 683.0
+offset_right = 1907.0
+offset_bottom = 1017.0
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("2_dxboq")
+stretch_mode = 2
+
+[node name="Title" type="Label" parent="." unique_id=518354045]
+layout_mode = 0
+offset_left = 219.0
+offset_top = 4.0
+offset_right = 919.0
+offset_bottom = 144.0
+text = "DÉCADA DE 1950 "
+label_settings = SubResource("LabelSettings_aegcr")
+vertical_alignment = 1
+autowrap_mode = 2

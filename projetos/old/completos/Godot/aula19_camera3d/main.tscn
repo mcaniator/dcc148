@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://d0kcoyc3yocsd"]
+
+[ext_resource type="Script" uid="uid://dlec0ygwvfg6m" path="res://main.gd" id="1_ig7tw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_7dm0k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7dm0k"]
+albedo_color = Color(0.185496, 0.416209, 1, 1)
+
+[sub_resource type="Environment" id="Environment_7dm0k"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_ig7tw")
+speed = 10.0
+
+[node name="Cube" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.666958, 0)
+mesh = SubResource("BoxMesh_7dm0k")
+surface_material_override/0 = SubResource("StandardMaterial3D_7dm0k")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.103852, 0.994593, 0, -0.994593, -0.103852, 0, 4.16846, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.53237, 5.36123)
+environment = SubResource("Environment_7dm0k")

@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://dygfrxyqpj1gb"]
+
+[ext_resource type="Texture2D" uid="uid://eapq7fr0vxh6" path="res://icon.svg" id="1_8hfe8"]
+[ext_resource type="Script" uid="uid://bncb8mnkdiepc" path="res://scenes/ai/ghost.gd" id="1_btccu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_btccu"]
+albedo_texture = ExtResource("1_8hfe8")
+uv1_scale = Vector3(3.07, 2.015, 3.07)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w4tms"]
+material = SubResource("StandardMaterial3D_btccu")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8hfe8"]
+
+[node name="Ghost" type="CharacterBody3D"]
+script = ExtResource("1_btccu")
+speed = 2.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_w4tms")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_8hfe8")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+debug_enabled = true

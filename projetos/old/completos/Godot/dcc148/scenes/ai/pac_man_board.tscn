@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=3 uid="uid://brtf31q3u8u4u"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_30xv4"]
+vertices = PackedVector3Array(0, 0.4850121, 3, 0, 0.4850121, 2.5, -0.5, 0.4850121, 2.25, -3.25, 0.4850121, 3, -0.5, 0.4850121, -1.75, 0, 0.4850121, -2, 0, 0.4850121, -3.25, -3.25, 0.4850121, -3.25, -4.75, 0.4850121, 4.75, -3.25, 0.4850121, 4.75, -3.25, 0.4850121, 4, -3.5, 0.4850121, -3.75, -4.75, 0.4850121, -4.75, 3, 0.4850121, -4, 3, 0.4850121, -4.75, 0.5, 0.4850121, 2.25, 3.25, 0.4850121, 3, 3.5, 0.4850121, -3.75, 4.75, 0.4850121, -4.75, 0.5, 0.4850121, -1.75, 3.25, 0.4850121, -3.25, 3.5, 0.4850121, 3.75, 4.75, 0.4850121, 4.75)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(10, 9, 8), PackedInt32Array(3, 10, 8), PackedInt32Array(11, 7, 12), PackedInt32Array(12, 7, 3), PackedInt32Array(12, 3, 8), PackedInt32Array(13, 11, 14), PackedInt32Array(14, 11, 12), PackedInt32Array(2, 3, 4), PackedInt32Array(4, 3, 7), PackedInt32Array(1, 15, 0), PackedInt32Array(0, 15, 16), PackedInt32Array(13, 14, 17), PackedInt32Array(17, 14, 18), PackedInt32Array(5, 6, 19), PackedInt32Array(19, 6, 20), PackedInt32Array(15, 19, 16), PackedInt32Array(16, 19, 20), PackedInt32Array(17, 18, 20), PackedInt32Array(20, 18, 16), PackedInt32Array(16, 18, 21), PackedInt32Array(21, 18, 22), PackedInt32Array(10, 21, 9), PackedInt32Array(9, 21, 22)]
+agent_radius = 0.25
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_30xv4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_30xv4"]
+albedo_color = Color(0.12225223, 0.12225223, 0.12225223, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mrmj6"]
+material = SubResource("StandardMaterial3D_30xv4")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_30xv4"]
+size = Vector3(3.8478274, 1.0369949, 0.12937927)
+
+[node name="PacManBoard" type="Node3D"]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_30xv4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+mesh = SubResource("PlaneMesh_30xv4")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="NavigationRegion3D"]
+affect_navigation_mesh = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/NavigationObstacle3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0056632757, 0.50404406, -3.6187599)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/NavigationObstacle3D/StaticBody3D"]
+transform = Transform3D(6.3421993, 0, 0, 0, 1.1233968, 0, 0, 0, 0.119987965, 0, 0.042666435, 0)
+mesh = SubResource("BoxMesh_mrmj6")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/NavigationObstacle3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0046806335, 0.064991, 0.00077056885)
+shape = SubResource("BoxShape3D_30xv4")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="NavigationRegion3D/NavigationObstacle3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0056632757, 0.50404406, 3.5523465)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/NavigationObstacle3D/StaticBody3D2"]
+transform = Transform3D(6.3421993, 0, 0, 0, 1.1233968, 0, 0, 0, 0.119987965, 0, 0.042666435, 0)
+mesh = SubResource("BoxMesh_mrmj6")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/NavigationObstacle3D/StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.017718077, 0.064991, 0.00077056885)
+shape = SubResource("BoxShape3D_30xv4")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="NavigationRegion3D/NavigationObstacle3D"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.0056632757, 0.50404406, -0.12254405)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/NavigationObstacle3D/StaticBody3D3"]
+transform = Transform3D(3.6565819, 0, 0, 0, 1.1233968, 0, 0, 0, 0.119987965, -0.28306866, 0.042666435, -1.2572855e-08)
+mesh = SubResource("BoxMesh_mrmj6")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/NavigationObstacle3D/StaticBody3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.29682207, 0.064991, 0.000770567)
+shape = SubResource("BoxShape3D_30xv4")

@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cyicqmlk81rwr"]
+
+[ext_resource type="PackedScene" uid="uid://dm8grv1yktoc7" path="res://objeto.tscn" id="1_bb12l"]
+[ext_resource type="Script" uid="uid://dxlk5bs1ohgtg" path="res://area.gd" id="1_qpjuv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bb12l"]
+
+[node name="Area" type="Area2D"]
+script = ExtResource("1_qpjuv")
+
+[node name="Objeto" parent="." instance=ExtResource("1_bb12l")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(175.226, inf)
+shape = SubResource("RectangleShape2D_bb12l")

@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://l8ofh4cm26xx"]
+
+[ext_resource type="PackedScene" uid="uid://ccgungo6i1qmt" path="res://pool_table.tscn" id="1_w78qj"]
+[ext_resource type="PackedScene" uid="uid://b46ri1p7b1uv3" path="res://ball.tscn" id="2_03hax"]
+[ext_resource type="Script" uid="uid://dnj1qysvne7w5" path="res://player.gd" id="3_q638n"]
+
+[sub_resource type="Environment" id="Environment_03hax"]
+
+[node name="Pool" type="Node"]
+
+[node name="PoolTable" parent="." instance=ExtResource("1_w78qj")]
+
+[node name="WhiteBall" parent="." instance=ExtResource("2_03hax")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.488317, 0)
+script = ExtResource("3_q638n")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.0177665, 0.999842, 0, -0.999842, -0.0177665, 0, 2.76572, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.772312, 0.635243, 0, -0.635243, 0.772312, 0, 1.18169, 2.07389)
+environment = SubResource("Environment_03hax")
+
+[node name="Ball" parent="." instance=ExtResource("2_03hax")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00490642, 0.151288, -0.926002)

@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://du2tnhblarxav"]
+
+[ext_resource type="Script" uid="uid://cuav27xr8bgmt" path="res://scripts/main.gd" id="1_mtgg2"]
+[ext_resource type="PackedScene" uid="uid://chwm1cov10pye" path="res://cenas/cubo_padrao.tscn" id="2_4fhxt"]
+[ext_resource type="PackedScene" uid="uid://et2ewa84lbtb" path="res://cenas/cubo_morte.tscn" id="2_t4ukd"]
+
+[sub_resource type="Environment" id="Environment_t4ukd"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_mtgg2")
+CuboMorte = ExtResource("2_t4ukd")
+CuboPadrao = ExtResource("2_4fhxt")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+environment = SubResource("Environment_t4ukd")
+current = true

@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://l8ofh4cm26xx"]
+
+[ext_resource type="PackedScene" uid="uid://bg0q5cepn2cht" path="res://scenes/physics/pool_table.tscn" id="1_w78qj"]
+[ext_resource type="PackedScene" uid="uid://dyetqdk6dk6vo" path="res://scenes/physics/ball.tscn" id="2_03hax"]
+[ext_resource type="Script" uid="uid://dnj1qysvne7w5" path="res://scripts/player.gd" id="3_q638n"]
+
+[sub_resource type="Environment" id="Environment_03hax"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7o3dw"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l1sg1"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xe5ts"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s15uf"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h15pc"]
+albedo_color = Color(1, 1, 0, 1)
+
+[node name="Pool" type="Node"]
+
+[node name="PoolTable" parent="." instance=ExtResource("1_w78qj")]
+
+[node name="WhiteBall" parent="." instance=ExtResource("2_03hax")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.488317, 0.7271024)
+script = ExtResource("3_q638n")
+force_magnitude = 30.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.0177665, 0.999842, 0, -0.999842, -0.0177665, 0, 2.76572, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.772312, 0.635243, 0, -0.635243, 0.772312, 0, 1.18169, 2.07389)
+environment = SubResource("Environment_03hax")
+
+[node name="Ball" parent="." instance=ExtResource("2_03hax")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22987074, 0.151288, -0.926002)
+material = SubResource("StandardMaterial3D_7o3dw")
+
+[node name="Ball2" parent="." instance=ExtResource("2_03hax")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00490642, 0.151288, -0.926002)
+material = SubResource("StandardMaterial3D_l1sg1")
+
+[node name="Ball3" parent="." instance=ExtResource("2_03hax")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23444915, 0.151288, -0.926002)
+material = SubResource("StandardMaterial3D_xe5ts")
+
+[node name="Ball4" parent="." instance=ExtResource("2_03hax")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08169489, 0.151288, -0.6602949)
+material = SubResource("StandardMaterial3D_s15uf")
+
+[node name="Ball5" parent="." instance=ExtResource("2_03hax")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13519955, 0.151288, -0.66539997)
+material = SubResource("StandardMaterial3D_h15pc")

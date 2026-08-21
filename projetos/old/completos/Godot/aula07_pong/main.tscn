@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2o4b0qjxg8bd"]
+
+[ext_resource type="PackedScene" uid="uid://dxduckf4mwug4" path="res://bola.tscn" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://dqwq2c6p8axu7" path="res://barra.tscn" id="2_h2yge"]
+
+[node name="Main" type="Node"]
+
+[node name="Bola" parent="." instance=ExtResource("1_0xm2m")]
+position = Vector2(594, 315)
+
+[node name="BarraEsquerda" parent="." instance=ExtResource("2_h2yge")]
+position = Vector2(49, 310)
+
+[node name="BarraDireita" parent="." instance=ExtResource("2_h2yge")]
+position = Vector2(1099, 298)
+tipo_jogador = 2

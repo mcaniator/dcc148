@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cn4wxd71cas1u"]
+
+[ext_resource type="Script" uid="uid://cwiw75u2t7xxq" path="res://scripts/dungeon_generator.gd" id="1_08e2k"]
+[ext_resource type="TileSet" uid="uid://bjg5a3j1unv1x" path="res://art/tilesets/rock_tiles.tres" id="2_4q8jt"]
+[ext_resource type="Script" uid="uid://mivpwjmpmhw7" path="res://scripts/camera_2d.gd" id="3_y3hve"]
+
+[node name="DungeonGenerator" type="Node"]
+script = ExtResource("1_08e2k")
+method = 2
+max_steps = 3
+map_size = 100
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("2_4q8jt")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+zoom = Vector2(0.2, 0.2)
+script = ExtResource("3_y3hve")
+speed = 100.0
+zoom_speed = 0.05

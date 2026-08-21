@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://cy3mwnexdtr3m"]
+
+[ext_resource type="PackedScene" uid="uid://brtf31q3u8u4u" path="res://scenes/ai/pac_man_board.tscn" id="1_o3bnt"]
+[ext_resource type="PackedScene" uid="uid://dfm3rsvnrh3ga" path="res://scenes/ai/pac_man.tscn" id="2_kk6gs"]
+[ext_resource type="PackedScene" uid="uid://dygfrxyqpj1gb" path="res://scenes/ai/ghost.tscn" id="3_kk6gs"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ugks3"]
+
+[sub_resource type="Sky" id="Sky_4cjwe"]
+sky_material = SubResource("ProceduralSkyMaterial_ugks3")
+
+[sub_resource type="Environment" id="Environment_evfxn"]
+background_mode = 2
+sky = SubResource("Sky_4cjwe")
+
+[node name="PacManGame" type="Node"]
+
+[node name="PacManBoard" parent="." instance=ExtResource("1_o3bnt")]
+
+[node name="PacMan" parent="." instance=ExtResource("2_kk6gs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.5242729, 0)
+
+[node name="Ghost" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_kk6gs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7287912, 0.54603124, -0.34998846)
+player = NodePath("../PacMan")
+
+[node name="Basic3DScene" type="Node" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Basic3DScene"]
+transform = Transform3D(1, 0, 0, 0, -0.0612924, 0.99811983, 0, -0.99811983, -0.0612924, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Basic3DScene"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 6.6764684, -1.7415277e-07)
+environment = SubResource("Environment_evfxn")

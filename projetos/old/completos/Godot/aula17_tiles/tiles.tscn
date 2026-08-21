@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=4 uid="uid://bd7u4degfwdax"]
+
+[ext_resource type="TileSet" uid="uid://cm1c42vtfynwm" path="res://tileset.tres" id="1_7h0kd"]
+[ext_resource type="Script" uid="uid://bty7i020obsqh" path="res://character_body_2d.gd" id="2_d6bvg"]
+[ext_resource type="Texture2D" uid="uid://cyddrv8xl6nyd" path="res://icon.svg" id="2_k6t24"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k6t24"]
+size = Vector2(116, 115)
+
+[node name="Tiles" type="Node"]
+
+[node name="Background" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD//wAAAAABAAAAAAAAAAAAAAACAAAAAAABAAAAAAACAAAAAAACAAAAAAACAAAAAAADAAAAAAACAAAAAAAEAAAAAAADAAAAAAAFAP//AAADAAEAAAAFAAAAAAADAAIAAAAGAP//AAAEAAEAAAAGAAAAAAAEAAIAAAA=")
+tile_set = ExtResource("1_7h0kd")
+
+[node name="Foreground" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1_7h0kd")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(166, 214)
+script = ExtResource("2_d6bvg")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("2_k6t24")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(-1, 1.5)
+shape = SubResource("RectangleShape2D_k6t24")

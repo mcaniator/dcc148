@@ -1,0 +1,75 @@
+[gd_scene load_steps=10 format=3 uid="uid://tb4yrljor1f"]
+
+[ext_resource type="Texture2D" uid="uid://b7qlidldm5kqx" path="res://icon.svg" id="1_dprmv"]
+[ext_resource type="Script" uid="uid://q8a823f282v3" path="res://sprite_2d.gd" id="2_nlgr8"]
+
+[sub_resource type="Animation" id="Animation_nlgr8"]
+resource_name = "move"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 5.98, 10),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(100, 0), Vector2(300, 0), Vector2(1000, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ljyfo"]
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ij1m1"]
+_data = {
+&"RESET": SubResource("Animation_ljyfo"),
+&"move": SubResource("Animation_nlgr8")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nlgr8"]
+animation = &"move"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ljyfo"]
+advance_mode = 2
+advance_condition = &"play"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ij1m1"]
+advance_mode = 2
+advance_condition = &"stop"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_4b1b3"]
+states/move/node = SubResource("AnimationNodeAnimation_nlgr8")
+states/move/position = Vector2(414, 100)
+transitions = ["Start", "move", SubResource("AnimationNodeStateMachineTransition_ljyfo"), "move", "End", SubResource("AnimationNodeStateMachineTransition_ij1m1")]
+
+[node name="Animation" type="Node"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_dprmv")
+script = ExtResource("2_nlgr8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_ij1m1")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="Sprite2D"]
+tree_root = SubResource("AnimationNodeStateMachine_4b1b3")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/play = false
+parameters/conditions/stop = false

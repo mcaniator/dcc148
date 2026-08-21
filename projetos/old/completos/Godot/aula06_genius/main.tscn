@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://c043vgpyp1fco"]
+
+[ext_resource type="Script" uid="uid://cdaqeujasr1kq" path="res://main.gd" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://besby4abujvfq" path="res://botao.tscn" id="1_ig7tw"]
+[ext_resource type="AudioStream" uid="uid://v3a8fohv08bs" path="res://audio/key10.mp3" id="3_lquwl"]
+[ext_resource type="AudioStream" uid="uid://qotcprx08is" path="res://audio/key15.mp3" id="4_7mycd"]
+[ext_resource type="AudioStream" uid="uid://dw4hwp3vuid4u" path="res://audio/key22.mp3" id="5_272bh"]
+[ext_resource type="AudioStream" uid="uid://bfgydpxfbt83c" path="res://audio/in a sentimental mood.mp3" id="6_7mycd"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_0xm2m")
+
+[node name="Botao" parent="." instance=ExtResource("1_ig7tw")]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(443, 184)
+scale = Vector2(2, 2)
+
+[node name="Botao2" parent="." instance=ExtResource("1_ig7tw")]
+modulate = Color(1, 1, 0, 1)
+position = Vector2(708, 183)
+scale = Vector2(2, 2)
+
+[node name="AudioStreamPlayer2D" parent="Botao2" index="3"]
+stream = ExtResource("3_lquwl")
+
+[node name="Botao3" parent="." instance=ExtResource("1_ig7tw")]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(443, 446)
+scale = Vector2(2, 2)
+
+[node name="AudioStreamPlayer2D" parent="Botao3" index="3"]
+stream = ExtResource("4_7mycd")
+
+[node name="Botao4" parent="." instance=ExtResource("1_ig7tw")]
+position = Vector2(707, 446)
+scale = Vector2(2, 2)
+
+[node name="AudioStreamPlayer2D" parent="Botao4" index="3"]
+stream = ExtResource("5_272bh")
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-1, 10)
+stream = ExtResource("6_7mycd")
+autoplay = true
+
+[node name="IniciarJogo" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -57.5
+offset_top = -36.0
+offset_right = 57.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Iniciar jogo"
+
+[connection signal="pressed" from="IniciarJogo" to="." method="_on_iniciar_jogo_pressed"]
+
+[editable path="Botao2"]
+[editable path="Botao3"]
+[editable path="Botao4"]

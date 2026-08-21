@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://besby4abujvfq"]
+
+[ext_resource type="Script" uid="uid://bt6eb3ld56cci" path="res://botao.gd" id="1_qkpq0"]
+[ext_resource type="Texture2D" uid="uid://c5e6fjghp3kf1" path="res://icon.svg" id="2_eqktc"]
+[ext_resource type="AudioStream" uid="uid://bdiudglm3pbdt" path="res://audio/key04.mp3" id="3_c5svr"]
+
+[sub_resource type="Gradient" id="Gradient_eqktc"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_c5svr"]
+gradient = SubResource("Gradient_eqktc")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.513761, 0.518349)
+fill_to = Vector2(0.0229358, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqktc"]
+size = Vector2(118, 120)
+
+[node name="Botao" type="Area2D"]
+script = ExtResource("1_qkpq0")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_eqktc")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+scale = Vector2(1.04688, 0.984375)
+texture = SubResource("GradientTexture2D_c5svr")
+height = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_eqktc")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_c5svr")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

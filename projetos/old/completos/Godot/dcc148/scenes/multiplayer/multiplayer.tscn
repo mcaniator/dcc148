@@ -1,0 +1,95 @@
+[gd_scene load_steps=8 format=3 uid="uid://ccc3rlo6klkwe"]
+
+[ext_resource type="Script" uid="uid://s8yko6n7ickk" path="res://scripts/multiplayer.gd" id="1_4wsfi"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4wsfi"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_r81c8"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4wsfi"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ugks3"]
+
+[sub_resource type="Sky" id="Sky_4cjwe"]
+sky_material = SubResource("ProceduralSkyMaterial_ugks3")
+
+[sub_resource type="Environment" id="Environment_evfxn"]
+background_mode = 2
+sky = SubResource("Sky_4cjwe")
+
+[node name="Multiplayer" type="Node"]
+script = ExtResource("1_4wsfi")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../Player")
+spawn_limit = 5
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_4wsfi")
+
+[node name="Player" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.52239347, 0)
+mesh = SubResource("CapsuleMesh_r81c8")
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+mesh = SubResource("PlaneMesh_4wsfi")
+
+[node name="Basic3DScene" type="Node" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Basic3DScene"]
+transform = Transform3D(1, 0, 0, 0, -0.0612924, 0.99811983, 0, -0.99811983, -0.0612924, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Basic3DScene"]
+transform = Transform3D(1, 0, 0, 0, 0.71018535, 0.7040147, 0, -0.7040147, 0.71018535, 0, 3.5635242, 5.5087743)
+environment = SubResource("Environment_evfxn")
+
+[node name="Overlay" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Overlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.4862745, 0.7529412, 0.77254903, 0.6509804)
+
+[node name="ServerConnectButton" type="Button" parent="Overlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -206.0
+offset_top = -25.0
+offset_right = -6.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "SERVER"
+
+[node name="ClientConnectButton" type="Button" parent="Overlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 75.0
+offset_top = -25.0
+offset_right = 275.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "CLIENT"
+
+[connection signal="pressed" from="Overlay/ServerConnectButton" to="." method="_on_server_connect_button_pressed"]
+[connection signal="pressed" from="Overlay/ClientConnectButton" to="." method="_on_client_connect_button_pressed"]

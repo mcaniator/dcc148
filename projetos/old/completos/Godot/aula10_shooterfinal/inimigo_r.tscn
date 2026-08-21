@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bciagmbwx4m48"]
+
+[ext_resource type="Script" uid="uid://cx51ip7kg8gwg" path="res://inimigo_r.gd" id="1_1w1ee"]
+[ext_resource type="Texture2D" uid="uid://owmny7ephipu" path="res://icon.svg" id="1_7c88j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1w1ee"]
+size = Vector2(120, 120)
+
+[node name="InimigoR" type="Area2D"]
+scale = Vector2(0.5, 0.5)
+collision_layer = 2
+script = ExtResource("1_1w1ee")
+velocidade = 50.0
+velocidade_rotacao = -5.0
+frequencia = 600.0
+amplitude = 300.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 0, 1)
+texture = ExtResource("1_7c88j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1w1ee")

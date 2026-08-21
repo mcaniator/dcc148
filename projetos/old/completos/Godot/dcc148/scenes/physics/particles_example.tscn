@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://luasa6hl3cwk"]
+
+[ext_resource type="PackedScene" uid="uid://c5k0j6ujcq5gl" path="res://scenes/physics/particle_system.tscn" id="1_etsf6"]
+[ext_resource type="PackedScene" uid="uid://cmbrmll48y6xf" path="res://scenes/basic_3d_scene.tscn" id="2_4mffl"]
+
+[node name="ParticlesExample" type="Node"]
+
+[node name="ParticleSystem" parent="." instance=ExtResource("1_etsf6")]
+
+[node name="Basic3DScene" parent="." instance=ExtResource("2_4mffl")]
+
+[node name="Camera3D" parent="Basic3DScene" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.107502)
+
+[editable path="Basic3DScene"]

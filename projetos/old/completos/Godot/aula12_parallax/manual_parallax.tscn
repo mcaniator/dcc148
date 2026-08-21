@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://2ehtymxwtgsl"]
+
+[ext_resource type="Texture2D" uid="uid://dlcj6t7dq8m5w" path="res://Free mountain background/Transparent PNG/layer-1-sky.png" id="1_1sqm2"]
+[ext_resource type="Script" uid="uid://cyev6x10snc4h" path="res://camera_2d.gd" id="2_f4f8t"]
+[ext_resource type="Script" uid="uid://lxu8j3oh38cb" path="res://sky.gd" id="2_i1sgi"]
+
+[node name="ManualParallax" type="Node"]
+
+[node name="Sky" type="Sprite2D" parent="."]
+texture_repeat = 2
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("1_1sqm2")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 6144, 1536)
+script = ExtResource("2_i1sgi")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+script = ExtResource("2_f4f8t")
+speed = 300.0

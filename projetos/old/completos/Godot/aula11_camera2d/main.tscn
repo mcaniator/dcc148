@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://ba2kihbsx8d7y"]
+
+[ext_resource type="Texture2D" uid="uid://btabqrqjuumnw" path="res://icon.svg" id="1_ig7tw"]
+[ext_resource type="Texture2D" uid="uid://cs8bfup8ukmfb" path="res://Full-Background.png" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://yss0vpu83a6v" path="res://camera_2d.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://b3f6eao3dkuem" path="res://player.gd" id="4_lquwl"]
+[ext_resource type="Texture2D" uid="uid://dvwosttqyxd5" path="res://barra.png" id="6_7mycd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
+size = Vector2(54, 224)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_272bh"]
+size = Vector2(120, 120)
+
+[node name="Main" type="Node"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -579.0
+offset_top = -591.0
+offset_right = 1279.0
+offset_bottom = 339.0
+texture = ExtResource("3_h2yge")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+limit_left = -570
+limit_right = 1271
+script = ExtResource("4_1bvp3")
+mode = 4
+scroll_speed = 100.0
+player = NodePath("../Player")
+adjustment_speed = 2000.0
+
+[node name="LeftBorder" type="Marker2D" parent="."]
+position = Vector2(-570, -4)
+
+[node name="RightBorder" type="Marker2D" parent="."]
+position = Vector2(1271, 0)
+
+[node name="Plataforma" type="Area2D" parent="."]
+rotation = -1.5708
+
+[node name="Sprite2D" type="Sprite2D" parent="Plataforma"]
+modulate = Color(0.801263, 4.11518e-06, 8.66354e-07, 1)
+texture = ExtResource("6_7mycd")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Plataforma"]
+position = Vector2(29, 114)
+shape = SubResource("RectangleShape2D_7mycd")
+
+[node name="Player" type="Area2D" parent="."]
+position = Vector2(-437, 91)
+script = ExtResource("4_lquwl")
+speed = 498.975
+jump = -1300.0
+gravidade = 3000.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("1_ig7tw")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(66, 61)
+shape = SubResource("RectangleShape2D_272bh")
+
+[connection signal="area_entered" from="Player" to="Player" method="_on_area_entered"]

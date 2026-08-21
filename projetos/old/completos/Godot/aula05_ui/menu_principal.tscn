@@ -1,0 +1,71 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmslkndn8rch3"]
+
+[ext_resource type="Texture2D" uid="uid://1umcdaomxjrc" path="res://icon.svg" id="1_bj1uy"]
+
+[sub_resource type="Theme" id="Theme_bj1uy"]
+
+[node name="MenuPrincipal" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 920.0
+offset_bottom = 533.0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 1.86
+text = "LABEL 1"
+
+[node name="Label2" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "LABEL 2"
+
+[node name="Label3" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "LABEL 3"
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+layout_mode = 0
+offset_right = 270.0
+offset_bottom = 204.0
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="AspectRatioContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "ASPECT 1"
+
+[node name="Label2" type="Label" parent="AspectRatioContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "ASPECT 2"
+
+[node name="Button" type="Button" parent="AspectRatioContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme = SubResource("Theme_bj1uy")
+text = "BUTTON"
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 2
+offset_left = 2.0
+offset_top = 312.0
+offset_right = 244.0
+offset_bottom = 339.0
+size_flags_vertical = 1
+value = 5.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 2
+offset_top = 361.0
+offset_right = 244.0
+offset_bottom = 389.0
+value = 100.0
+texture_progress = ExtResource("1_bj1uy")

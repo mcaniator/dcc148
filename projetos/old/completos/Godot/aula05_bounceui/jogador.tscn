@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://3o0jcetbhykw"]
+
+[ext_resource type="Texture2D" uid="uid://cqsuuil13ikpp" path="res://bola.png" id="2_c2wt1"]
+[ext_resource type="Script" uid="uid://c8djscgonh81a" path="res://jogador.gd" id="2_q2130"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c2wt1"]
+radius = 26.4008
+
+[node name="Jogador" type="Area2D"]
+script = ExtResource("2_q2130")
+velocidade = Vector2(300, 0)
+gravidade = 2000.0
+impulso = -1400.0
+chao = 600.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_c2wt1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_c2wt1")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

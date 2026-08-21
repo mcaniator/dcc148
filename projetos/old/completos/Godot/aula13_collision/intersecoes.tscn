@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://o6jct8gxme3n"]
+
+[ext_resource type="Script" uid="uid://s113kgl65ksb" path="res://intersecoes.gd" id="1_fr5xd"]
+[ext_resource type="Texture2D" uid="uid://ov6bekmf3vg0" path="res://icon.svg" id="1_g5aq2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g5aq2"]
+size = Vector2(117, 116)
+
+[node name="Intersecoes" type="Node"]
+script = ExtResource("1_fr5xd")
+
+[node name="Object1" type="Sprite2D" parent="."]
+position = Vector2(200, 120)
+texture = ExtResource("1_g5aq2")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Object1"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_g5aq2")
+
+[node name="Object2" type="Sprite2D" parent="."]
+self_modulate = Color(1, 0, 0, 1)
+position = Vector2(697, 128)
+texture = ExtResource("1_g5aq2")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Object2"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_g5aq2")

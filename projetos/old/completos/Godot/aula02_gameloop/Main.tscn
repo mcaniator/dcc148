@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://y8y7uao34jea"]
+
+[ext_resource type="PackedScene" uid="uid://bs4osacti7278" path="res://Filho.tscn" id="1_glv2v"]
+[ext_resource type="Script" uid="uid://cm0uy05op828l" path="res://chamadas.gd" id="1_uu6xs"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_uu6xs")
+
+[node name="Filho 1" parent="." instance=ExtResource("1_glv2v")]
+position = Vector2(311, 273)
+
+[node name="Filho 2" parent="." instance=ExtResource("1_glv2v")]
+position = Vector2(684, 272)

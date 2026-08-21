@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://b62qu1hicj1d6"]
+
+[ext_resource type="Script" uid="uid://6c7d73x425x1" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://3o0jcetbhykw" path="res://jogador.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://nmxhe21vn4xn" path="res://inimigo.tscn" id="2_0xm2m"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0xm2m"]
+font_size = 50
+
+[node name="Main" type="Node"]
+script = ExtResource("1_h2yge")
+
+[node name="Jogador" parent="." instance=ExtResource("1_ig7tw")]
+position = Vector2(943, 402)
+impulso = -1300.0
+
+[node name="BolaSuperior" parent="." instance=ExtResource("2_0xm2m")]
+modulate = Color(1, 1, 0, 1)
+position = Vector2(0, 262)
+
+[node name="BolaInferior" parent="." instance=ExtResource("2_0xm2m")]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(0, 590)
+velocidade = 150.0
+
+[node name="Pontos" type="Label" parent="."]
+offset_left = 4.0
+offset_top = 7.0
+offset_right = 122.0
+offset_bottom = 76.0
+text = "0"
+label_settings = SubResource("LabelSettings_0xm2m")
+horizontal_alignment = 2
+
+[connection signal="tocou_chao" from="Jogador" to="." method="_on_jogador_tocou_chao"]

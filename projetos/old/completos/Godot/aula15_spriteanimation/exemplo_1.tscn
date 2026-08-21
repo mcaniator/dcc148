@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://clafe3g8kj6t1"]
+
+[ext_resource type="Texture2D" uid="uid://cfixb7eay7r6g" path="res://ninja.png" id="1_vik4c"]
+[ext_resource type="Script" uid="uid://d1c0gs3hrmxif" path="res://exemplo_1.gd" id="2_viap4"]
+
+[node name="Exemplo1" type="Sprite2D"]
+texture = ExtResource("1_vik4c")
+hframes = 8
+vframes = 5
+frame = 17
+script = ExtResource("2_viap4")
+speed = 100.0
+walk_start = 17
+walk_end = 24

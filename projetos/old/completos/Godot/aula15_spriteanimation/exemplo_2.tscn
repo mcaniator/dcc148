@@ -1,0 +1,147 @@
+[gd_scene load_steps=27 format=3 uid="uid://botxkvq45x7hm"]
+
+[ext_resource type="Texture2D" uid="uid://ysuwxbuycl75" path="res://NinjaAdventure/png/Run__000.png" id="1_a1yot"]
+[ext_resource type="Texture2D" uid="uid://dx1iboqmd2kie" path="res://NinjaAdventure/png/Idle__000.png" id="1_tokro"]
+[ext_resource type="Texture2D" uid="uid://dt5m47t0028kn" path="res://NinjaAdventure/png/Idle__001.png" id="2_0vhif"]
+[ext_resource type="Texture2D" uid="uid://vctvvwenvgl6" path="res://NinjaAdventure/png/Run__001.png" id="2_wajut"]
+[ext_resource type="Texture2D" uid="uid://cnbp2w0swnd0x" path="res://NinjaAdventure/png/Idle__002.png" id="3_kuibq"]
+[ext_resource type="Texture2D" uid="uid://cm577gdlo63g5" path="res://NinjaAdventure/png/Run__002.png" id="3_o7dcd"]
+[ext_resource type="Texture2D" uid="uid://dgksv4pn2m4cv" path="res://NinjaAdventure/png/Idle__003.png" id="4_355xv"]
+[ext_resource type="Texture2D" uid="uid://btweyt83sd1k2" path="res://NinjaAdventure/png/Run__003.png" id="4_ts2ne"]
+[ext_resource type="Texture2D" uid="uid://p61sf0jdbgta" path="res://NinjaAdventure/png/Run__004.png" id="5_viiyf"]
+[ext_resource type="Texture2D" uid="uid://ex5d348xoqcj" path="res://NinjaAdventure/png/Idle__004.png" id="5_vulr6"]
+[ext_resource type="Texture2D" uid="uid://bc3l4q830x317" path="res://NinjaAdventure/png/Run__005.png" id="6_cqvg0"]
+[ext_resource type="Texture2D" uid="uid://v48ty72chxn" path="res://NinjaAdventure/png/Idle__005.png" id="6_u1mdy"]
+[ext_resource type="Texture2D" uid="uid://du51egujc0r2r" path="res://NinjaAdventure/png/Idle__006.png" id="7_nlqve"]
+[ext_resource type="Texture2D" uid="uid://cxjlegtjwrdhu" path="res://NinjaAdventure/png/Run__006.png" id="7_yehc0"]
+[ext_resource type="Texture2D" uid="uid://b6gw1gi0ll6wt" path="res://NinjaAdventure/png/Idle__007.png" id="8_6dfx3"]
+[ext_resource type="Texture2D" uid="uid://cpelw8aoqch67" path="res://NinjaAdventure/png/Run__007.png" id="8_qa266"]
+[ext_resource type="Texture2D" uid="uid://bo1kdrkiilwo7" path="res://NinjaAdventure/png/Idle__008.png" id="9_6k2gb"]
+[ext_resource type="Texture2D" uid="uid://b418j4e8rwqje" path="res://NinjaAdventure/png/Run__008.png" id="9_r0rba"]
+[ext_resource type="Texture2D" uid="uid://bed06tjujf5ww" path="res://NinjaAdventure/png/Idle__009.png" id="10_dkqtm"]
+[ext_resource type="Texture2D" uid="uid://bc01hv0ay7q55" path="res://NinjaAdventure/png/Run__009.png" id="10_qoeku"]
+[ext_resource type="Script" uid="uid://dsof8u5atqa8s" path="res://exemplo_2.gd" id="21_0vhif"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tokro"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_tokro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_0vhif")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_kuibq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_355xv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vulr6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_u1mdy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_nlqve")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_6dfx3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_6k2gb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_dkqtm")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_a1yot")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_wajut")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_o7dcd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ts2ne")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_viiyf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_cqvg0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_yehc0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_qa266")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_r0rba")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_qoeku")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_0vhif"]
+resource_name = "animation_clip"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"run"]
+}
+
+[sub_resource type="Animation" id="Animation_kuibq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"run"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_355xv"]
+_data = {
+&"RESET": SubResource("Animation_kuibq"),
+&"animation_clip": SubResource("Animation_0vhif")
+}
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_vulr6"]
+
+[node name="Exemplo2" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_tokro")
+animation = &"run"
+frame_progress = 0.0962368
+script = ExtResource("21_0vhif")
+speed = 100.0
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_355xv")
+}
+tree_root = SubResource("AnimationNodeStateMachine_vulr6")

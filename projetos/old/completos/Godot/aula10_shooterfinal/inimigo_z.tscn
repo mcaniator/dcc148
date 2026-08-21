@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cat0ibha26wcp"]
+
+[ext_resource type="Script" uid="uid://cqj3n4vuqyu1r" path="res://inimigo_z.gd" id="1_2os5m"]
+[ext_resource type="Texture2D" uid="uid://owmny7ephipu" path="res://icon.svg" id="1_yk5qu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yk5qu"]
+size = Vector2(120, 120)
+
+[node name="InimigoZ" type="Area2D"]
+scale = Vector2(0.5, 0.5)
+collision_layer = 2
+script = ExtResource("1_2os5m")
+velocidade = 50.0
+velocidade_aproximacao = 0.1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.786916, 0.0004815, 0.78691, 1)
+texture = ExtResource("1_yk5qu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_yk5qu")
