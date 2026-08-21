@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bounce</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/highlightjs-gdscript@master/dist/gdscript.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-gdscript.min.js"></script>
+
+    <!-- <script>
+        hljs.highlightAll();
+    </script> -->
+
+    <link rel="stylesheet" href="../main.css">
+    <script src="../projects.js"></script>
+    <!-- <script src="../headers.js"></script> -->
+</head>
+<body>
+    <h1>Bounce</h1>
+    <project-step>Crie um novo projeto e copie os assets da pasta deste passo-a-passo para a pasta do projeto criada pela Godot.</project-step>
+    <project-step>Nas Configurações do Projeto, modifique a <strong>Cor de Fundo Padrão</strong> para preto.</project-step>
+    <project-step>Ainda nas Configurações do Projeto, vá na aba <strong>Mapa de Entrada</strong> para associar teclas do teclado com ações. Na caixa de texto onde está escrito "Adicionar Nova Ação", digite "move_left" e clique em "Adicionar".</project-step>
+    <project-step>Na ação que foi criada, clique no ícone com o símbolo de +, pressione a seta para a esquerda e associe-a à ação. É possível associar mais de uma tecla (por exemplo, a tecla A) a uma mesma ação, se desejar.</project-step>
+    <project-step step-figure="inputMap.png" step-figure-caption="Visão do Mapa de Entrada do projeto">Repita o processo para outra ação chamada "move_right". A configuração deve se assemelhar à da imagem abaixo.</project-step>
+    <section>
+        <h3>Cena do jogador</h3>
+        <project-step>Crie uma nova cena e selecione como nó raiz a opção "Outro Nó". Na janela que se abrir, escolha o nó <strong>Sprite2D</strong>. Dê o nome de "Player" a este nó e salve a cena.</project-step>
+        <project-step>Associe o arquivo "bola.png", da seção de assets do projeto, à propriedade <strong>Texture</strong> do nó Sprite2D.</project-step>
+    </section>
+    <section>
+        <h3>Cena dos obstáculos</h3>
+        <project-step>Crie uma nova cela e, novamente, selecione como nó raiz um <strong>Sprite2D</strong>. Dê a este nó o nome de "Obstacle" e salve a cena.</project-step>
+        <project-step>Associe a mesma imagem "bola.png" à propriedade <strong>Texture</strong> do nó.</project-step>
+        <project-step>Altere a propriedade <strong>Transform/Scale</strong> para 0.5 em x e em y.</project-step>
+    </section>
+    <section>
+        <h3>Cena principal</h3>
+        <project-step>
+            Crie uma terceira cena e escolha novamente a opção "Outro Nó". Para esta cena, porém, escolha o nó <strong>Node</strong>. Renomeie-o como "MainGame" e salve a cena.
+            <details>
+                <summary>Observação</summary>
+                <p>Este nó representa um nó genérico da Godot, que tem o mínimo de propriedades. Seria possível também criar um nó do tipo <strong>Node2D</strong> como raiz desta cena, mas um Node2D possui informações de posicionamento no espaço, o que não faz sentido para o propósito deste nó, que é tão somente compor a cena principal a partir das cenas filhas.</p>
+            </details>
+        </project-step>
+        <project-step step-figure="mainScene.png" step-figure-caption="Visão da hierarquia da cena principal">Instancie como filhas deste nó (Ctrl+Shift+A) as cenas criadas anteriormente. Inclua uma instância do <strong>Player</strong> e duas instâncias de <strong>Obstacle</strong>.</project-step>
+        <project-step>
+            Como queremos que cada obstáculo tenha uma cor distinta, não podemos alterar a cor diretamente na cena Obstacle. Assim, altere a cor de cada instância individualmente através da propriedade <strong>Modulate</strong> (localizada dentro de <em>CanvasItem/Visibility</em>).
+            <details>
+                <summary>Observação</summary>
+                <p>Tanto a propriedade <strong>Modulate</strong> quanto a <strong>Self Modulate</strong> podem ser usadas neste caso. A diferença é que Modulate afeta os filhos do nó na hierarquia, enquanto Self Modulate não os afeta. Como os obstáculos são compostos de apenas um nó, não faz diferença qual propriedade será utilizada.</p>
+            </details>
+        </project-step>
+        <project-step step-figure="gameScreen.png" step-figure-caption="Visão da tela principal do jogo">Selecione cada um dos objetos inseridos na cena e reposicione-os na tela em um padrão similar ao da imagem abaixo.</project-step>
+    </section>
+    <section>
+        <h3>Scripts</h3>
+        <project-step>Na cena <strong>Player</strong> (na cena mãe, e não na sua instância), adicione um script ao nó raiz.</project-step>
+        <project-step step-figure="exportVariables.png" step-figure-caption="Variáveis com a anotação @export aparecem no Inspetor como propriedades do nó">
+            Adicione as variáveis abaixo no topo do script. Note que as variáveis marcadas como <code class="language-gdscript">@export</code> aparecem como propriedades no Inspetor do nó associado ao script, permitindo alterar os seus valores antes (ou durante) a execução.
+            <project-code>
+@export var x_speed: float
+@export var ground: float
+@export var bounce: float
+@export var gravity: float
+
+var y_speed: float
+            </project-code>
+        </project-step>
+        <project-step>Remova a função <code class="language-gdscript">_ready</code> e modifique a função <code class="language-gdscript">_process</code> pela função <code class="language-gdscript">_physics_process</code>.</project-step>
+        <project-step>
+            Na função <code class="language-gdscript">_physics_process</code>, inclua código para a movimentação da bola.
+            <project-code>
+func _physics_process(delta: float) -> void:
+	var dx = Input.get_axis("move_left", "move_right")
+	position.x += x_speed * delta * dx
+	
+	y_speed += gravity * delta
+	position.y += y_speed * delta
+	
+	if position.y > ground:
+		position.y = ground
+		y_speed = -bounce
+            </project-code>
+        </project-step>
+    </section>
+
+    <section id="exercicios">
+        <h3>Exercícios</h3>
+        <ol>
+            <li>Inclua um script na cena dos obstáculos que faça com que eles se movam continuamente na horizontal, entre os limites esquerdo e direito da tela. A velocidade do obstáculo deve ser uma variável do tipo <code class="language-gdscript">@export</code>, para que, na cena principal, você possa configurar cada instância com uma velocidade distinta.</li>
+            <li>Inclua um script no nó raiz da cena principal e, na função <code class="language-gdscript">_physics_process</code>, calcule as distâncias entre o jogador e os obstáculos. Se a distância entre algum deles for menor que um determinado limiar (escolha um valor adequado), imprima uma mensagem de erro usando a função <code class="language-gdscript">print</code>.</li>
+            <li>Crie uma tela de título para o jogo.</li>
+            <li>Na cena principal, crie uma variável para armazenar a pontuação do jogador. A pontuação deve aumentar toda vez que a bola do jogador atingir o chão.</li>
+            <li>Inclua um nó do tipo Label na cena principal para exibir a pontuação do jogador.</li>
+            <li>Modifique o jogo para que a velocidade dos obstáculos aumente cada vez que a pontuação do jogador atingir um múltiplo de 10.</li>
+            <li>Crie uma tela de game over que permita ao jogador reiniciar o jogo.</li>
+        </ol>
+    </section>
+
+    <hr>
+    <footer>
+        <a href="../colossal/colossal.html" class="previous">Anterior</a><a href="../projects.html">Lista de projetos</a><a href="#"  class="next disabled">Próximo</a>
+    </footer>
+</body>
+</html>
