@@ -1,0 +1,84 @@
+body {
+    font-family: "Open Sans", sans-serif;
+    text-align: justify;
+    margin-left: 20%;
+    margin-right: 20%;
+    font-size: large;
+}
+
+h1 {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+h3 {
+    text-transform: uppercase;
+    font-weight: normal;
+    color: white;
+    background-color: rgba(100, 0, 100, 1);
+    padding: 5px 20px;
+    margin-bottom: 5px;
+}
+
+.tenor-gif-embed {
+    margin: auto;
+}
+
+details {
+    font-size: medium;
+    font-style: italic;
+    background-color: rgba(200, 150, 200, 1);
+    box-shadow: 2px 2px 4px #bbbbbb;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+details > summary {
+    font-weight: bold;
+}
+
+footer {
+    display: flex;
+    text-align: center;
+}
+
+a {
+    text-transform: uppercase;
+    color: black;
+    text-decoration: none;
+}
+
+footer a {
+    padding: 10px;
+    flex-grow: 1;
+    font-size: small;
+    /* font-weight: bold; */
+}
+
+a.disabled {
+    color: gray;
+    cursor: default;
+}
+
+a.previous {
+    text-align: left;
+}
+
+a.next {
+    text-align: right;
+}
+
+pre {
+    tab-size: 4;
+}
+
+pre[class*="language-"],
+code[class*="language-"] {
+    background-color: whitesmoke;
+    tab-size: 4;
+}
+
+code[class*="language-"] {
+    font-size: smaller;
+}

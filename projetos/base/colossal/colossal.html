@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colossal Cave Adventure</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/highlightjs-gdscript@master/dist/gdscript.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-gdscript.min.js"></script>
+
+    <!-- <script>
+        hljs.highlightAll();
+    </script> -->
+
+    <link rel="stylesheet" href="../main.css">
+    <script src="../projects.js"></script>
+    <!-- <script src="../headers.js"></script> -->
+</head>
+<body>
+    <h1>Colossal Cave Adventure</h1>
+    <project-step>Crie um novo projeto e copie o conteúdo da pasta de assets deste passo-a-passo para a pasta do projeto criada pela Godot.</project-step>
+    <project-step>Vá em <em>Projeto/Configurações do Projeto</em>, na seção <em>Renderização/Ambiente</em>, e mude a <strong>Cor de Fundo Padrão</strong> para preto.</project-step>
+    <section>
+        <h3>Tela de título</h3>
+        <project-step>Crie uma cena com um nó raiz do tipo Interface de Usuário (<strong>Control</strong>), e dê a ela o nome <strong>TitleScreen</strong>. Lembre-se de salvar a cena (Ctrl+S).</project-step>
+        <project-step>Selecione o nó TitleScreen e adicione um novo tema na propriedade <strong>Theme</strong>.</project-step>
+        <project-step>Clique sobre o tema criado para expandir as propriedades e, no campo <strong>Default Font</strong>, associe o arquivo de fonte presente na pasta do projeto (ou outro de sua escolha).</project-step>
+        <project-step step-figure="theme.png" step-figure-caption="Aba de edição de temas">Na aba do tema que se abriu na parte inferior da tela, clique no botão Gerenciar Itens.</project-step>
+        <project-step>Na tela que se abriu, selecione a aba <strong>Importar Itens</strong>, escolha o <strong>Button</strong>, marque a caixa de seleção de <strong>Importar</strong> e clique no botão <strong>Importar Seleção</strong> para importar todas as propriedades do botão.</project-step>
+        <project-step step-figure="fontColors.png" step-figure-caption="Edição das cores da fonte para diferentes eventos do botão">Feche a janela de importação e você verá à direita as propriedades importadas. Modifique, de preto para amarelo, as cores das propriedades <strong>font_color</strong>, <strong>font_focus_color</strong> e <strong>font_hover_color</strong>.</project-step>
+        <project-step step-figure="styleBoxes.png" step-figure-caption="Seção da aba de temas para editar caixas de estilo">Clique na seta para a direita para mover a lista de categorias de propriedades e selecionar a seção de "Caixas de Estilo" (<strong>Style Boxes</strong>).</project-step>
+        <project-step>Nas propriedades <strong>focus</strong>, <strong>hover</strong>, <strong>normal</strong> e <strong>pressed</strong>, para cada uma delas, adicione uma style box e clique sobre a style box adicionada para abrir as propriedades no Inspetor à direita.</project-step>
+        <project-step>Configure cada Style Box como a seguir:
+            <project-step>
+                <strong>focus</strong>
+                <ul>
+                    <li>Border Width: 2 (todas as bordas)</li>
+                    <li>Border Color: amarelo</li>
+                    <li>Expand Margins: left = 10, top = 5, right = 10, bottom = 5</li>
+                </ul>
+            </project-step>
+            <project-step>
+                <strong>hover</strong>
+                <ul>
+                    <li>BG Color: preto</li>
+                    <li>Border Width: 2 (todas as bordas)</li>
+                    <li>Border Color: amarelo</li>
+                    <li>Expand Margins: left = 10, top = 5, right = 10, bottom = 5</li>
+                    <li>Content Margins: left = 0, right = 0</li>
+                </ul>
+            </project-step>
+            <project-step>
+                <strong>normal</strong>
+                <ul>
+                    <li>BG Color: preto</li>
+                </ul>
+            </project-step>
+            <project-step>
+                <strong>pressed</strong>
+                <ul>
+                    <li>BG Color: amarelo</li>
+                    <li>Expand Margins: left = 10, top = 5, right = 10, bottom = 5</li>
+                </ul>
+            </project-step>
+        </project-step>
+        <project-step step-figure="saveTheme.png" step-figure-caption="Salvando o tema criado">Salve o tema construído clicando na seta ao lado da propriedade <strong>Theme</strong> da Title Screen e escolhendo a opção "Salvar como". Um arquivo do tipo .tres será salvo na pasta do projeto.</project-step>
+        <project-step step-figure="titleScreenNodeHiearchy.png" step-figure-caption="Visão da hierarquia">Adicione como nós filhos à cena (Ctrl+A) um <strong>Label</strong> e um <strong>Button</strong>.</project-step>
+        <project-step>Selecione o Label, mude a propriedade <strong>Text</strong> para "Colossal Cave Adventure" e coloque uma quebra de linha antes da palavra Adventure. Mude também a propriedade <strong>Horizontal Alignment</strong> para "Center".</project-step>
+        <project-step>Na propriedade <strong>LabelSettings</strong>, crie um novo recurso, clique sobre ele após a criação para expandir as propriedades, e mude o tamanho da fonte para 100.</project-step>
+        <project-step>Selecione o botão e mude a propriedade <strong>Text</strong> para "INICIAR".</project-step>
+        <project-step>Na propriedade <strong>Theme Overrides</strong> da seção <strong>Control</strong> do botão, mude o <strong>Font Size</strong> para 32.</project-step>
+        <project-step step-figure="anchorMode.png" step-figure-caption="Usando as predefinições de âncora para posicionamento">Para posicionar o label no centro da tela, selecione-o e use a Predefinição de Âncora "Centro".</project-step>
+        <project-step step-figure="moveMode.png" step-figure-caption="Modo de movimentação (tecla W)">Para posicionar o botão na tela, selecione-o e aperte a tecla W (alternativamente, clique no ícone do Modo de Movimentação na barra de ferramentas da Cena 2D). Isto ativará os eixos de movimentação sobre o elemento, permitindo movê-lo na tela.</project-step>
+        <project-step step-figure="titleScreenFinal.png" step-figure-caption="Resultado final da tela de título">Check: ao final do processo, a tela inicial deve estar como na imagem abaixo.</project-step>
+        <project-step step-figure="addScript.png" step-figure-caption="Associação de um script a um nó">
+            Agora selecione o nó <strong>TitleScreen</strong> e adicione um script a ele (clicando com o botão direito sobre o nó, ou clicando sobre o ícone do script ao lado da caixa de filtros). Apague qualquer código que for gerado automaticamente, mantendo apenas a linha <code class="language-gdscript">extends Control</code>.
+        </project-step>
+        <project-step>
+            Selecione novamente o botão, vá na aba de Sinais (à direita do Inspetor) e associe ao botão o sinal <strong>pressed</strong>. Na janela que se abrirá, clique no botão "Conectar" para confirmar a associação.
+        </project-step>
+        <project-step>
+            Na função gerada para o sinal associado, inclua a linha abaixo. Este código tem o propósito de mudar de cena, da tela de título para a tela principal do jogo.
+            <project-code>
+get_tree().change_scene_to_file("res://main_game.tscn")
+            </project-code>
+        </project-step>
+    </section>
+    <section>
+        <h3>Tela de jogo</h3>
+        <project-step>Crie uma nova cena com um nó raiz do tipo Interface de Usuário (Control), e dê a ela o nome <strong>MainGame</strong>.</project-step>
+        <project-step>Associe o arquivo do tema salvo à propriedade <strong>Theme</strong> do nó raiz.</project-step>
+        <project-step>Adicione como nós filhos à cena um <strong>Label</strong> e um <strong>LineEdit</strong>.</project-step>
+        <project-step>
+            Selecione o Label e altere as seguintes propriedades:
+            <ul>
+                <li><strong>Horizontal Alignment:</strong> Center</li>
+                <li><strong>Autowrap Mode:</strong> Word</li>
+                <li><strong>Control/Layout/Layout Mode</strong>: Anchors</li>
+                <li><strong>Control/Layout/Anchors Preset</strong>: Superior Largura Total</li>
+                <li><strong>Control/Theme Overrides/Font Size</strong>: 32</li>
+                <li><strong>Custom Minimum Size</strong>: Usar os mesmos valores de <strong>Control/Layout/Transform/Size</strong><br>
+                    <details>
+                        <summary>Observação</summary>
+                        <p>A Godot emite um warning caso não seja definido um tamanho mínimo para um label que está dentro de um container. Como não estamos usando containers ainda, esta definição tem somente o propósito de eliminar o warning.</p>
+                    </details>
+                </li>
+            </ul>
+        </project-step>
+        <project-step>
+            Selecione o LineEdit e altere as seguintes propriedades:
+            <ul>
+                <li><strong>Placeholder Text:</strong> "Digite seu comando aqui..."</li>
+                <li><strong>Keep Editing on Text Submit:</strong> Marcar como Ativo</li>
+                <li><strong>Control/Layout/Layout Mode</strong>: Anchors</li>
+                <li><strong>Control/Layout/Anchors Preset</strong>: Inferior Largura Total</li>
+                <li><strong>Control/Theme Overrides/Font Size</strong>: 32</li>
+            </ul>
+        </project-step>
+        <project-step step-figure="mainGameScreenFinal.png" step-figure-caption="Resultado final da tela de jogo">Check: coloque algum texto de teste no campo <strong>Text</strong> do Label e verifique se a tela se assemelha à imagem abaixo. Apague o texto depois.</project-step>
+        <project-step>
+            Adicione um script ao nó <strong>MainGame</strong> e defina as seguintes variáveis:
+            <project-code>
+var locations: Dictionary = {}
+var travel_table: Dictionary = {}
+var words: Dictionary = {}
+
+var player_position = 1
+            </project-code>
+        </project-step>
+        <project-step>
+            Adicione uma função para carregar os dados do arquivo de entrada:
+            <project-code>
+func load_file() -> void:
+    var file = FileAccess.open("res://cave.dat", FileAccess.READ)
+    var line: String
+    
+    # Descarta a primeira linha (identificador da Seção 1)
+    line = file.get_line()
+        
+    line = file.get_line()
+    var parts = line.split("\t")
+    var id = int(parts[0])
+    var previous_id = 0
+    while id != -1:
+        print(parts)
+        if id == previous_id:
+            locations[id] += " " + parts[1]
+        else:
+            locations[id] = parts[1]
+            previous_id = id
+        
+        line = file.get_line()
+        parts = line.split("\t")
+        id = int(parts[0])
+    
+    # Descarta a primeira linha (identiicador da Seção 3)
+    # Obs.: a Seção 2, presente no arquivo do jogo original, foi suprimida no arquivo deste projeto
+    line = file.get_line()
+    print(line)
+    
+    line = file.get_line()
+    parts = line.split("\t")
+    var x = int(parts[0])
+    while x != -1:
+        var y = int(parts[1])
+        var x_to_y = Vector2i(x, y)
+        
+        var valid_words = Array(parts.slice(2)).map(func(wid): return int(wid))
+        travel_table[x_to_y] = valid_words
+        print(travel_table[x_to_y])	
+        
+        line = file.get_line()
+        parts = line.split("\t")
+        x = int(parts[0])
+    
+    # Descarta a primeira linha (identiicador da Seção 4)
+    line = file.get_line()
+    print(line)
+    
+    line = file.get_line()
+    parts = line.split("\t")
+    id = int(parts[0])
+    while id != -1:
+        words[parts[1]] = id
+        
+        line = file.get_line()
+        parts = line.split("\t")
+        id = int(parts[0])
+            </project-code>
+        </project-step>
+
+        <project-step>
+            Sempre que houver uma mudança na posição do jogador, o label deve ser atualizado com a descrição da localização. Para isto, crie a função abaixo:
+            <project-code>
+func update_label() -> void:
+    $Label.text = my_capitalize(locations[player_position])
+            </project-code>
+        </project-step>
+
+        <project-step>
+            Crie uma função para movimentar o jogador para uma nova localização. Esta função assume que apenas localizações com índice até 140 são válidas.
+            <project-code>
+func move_player_to(y: int) -> void:
+    if y <= 140:
+        player_position = y
+        update_label()
+    else:
+        $Label.text = "NOT IMPLEMENTED"
+            </project-code>
+        </project-step>
+
+        <project-step>
+            Selecione o nó LineEdit, vá na guia de Sinais e associe o sinal text_submitted, para implementarmos um comportamento para o momento em que o jogador pressiona Enter após ter digitado algum comando na caixa de texto. Esta função captura o comando, verifica se é uma palavra válida e, caso positivo, verifica se esta palavra produz algum deslocamento a partir da posição atual do jogador.
+            <project-code>
+func _on_line_edit_text_submitted(new_text: String) -> void:
+    var word_id = words.get(new_text.to_upper())
+    var y: int
+    if word_id:
+        for goto: Vector2i in travel_table:
+            if goto.x == player_position and word_id in travel_table[goto]:
+                print("Found: ", goto.y)
+                move_player_to(goto.y)
+                break
+                
+    $LineEdit.text = ''
+            </project-code>
+        </project-step>
+
+        <project-step>
+            Por fim, inclua o código abaixo na função <strong>ready</strong> (substitua a palavra-chava <code class="language-gdscript">pass</code>) para iniciar o jogo.
+            <project-code>
+load_file()
+$LineEdit.grab_focus()
+update_label()
+            </project-code>
+        </project-step>
+    </section>
+
+    <section id="exercicios">
+        <h3>Exercícios</h3>
+        <ol>
+            <li>Implemente a opção de o jogador solicitar uma palavra aleatória que seja válida para a sala corrente. Esta opção deve ser ativada quando o jogador digitar a palavra "random".</li>
+            <li>Implemente a opção de exibir para o jogador a lista de palavras válidas para a sala corrente ao digitar a palavra "help".</li>
+            <li>Implemente um estado de game over. Para isso, considere que o jogo se encerra sempre que o jogador atinge uma sala cujo único destino possível é a localização identificada pelo valor 0, que representa uma localização inexistente (dois exemplos desse tipo de sala são as salas 20 e 21). Nesse caso, exibir para o jogador um botão que permita a ele reiniciar a sessão de jogo (ou seja, reposicionar o jogador na sala inicial e atualizar o texto na tela).</li>
+            <li>Incluir um modo de cheat, ativado pela palavra "cheat", que permita ao jogador se teleportar para qualquer sala imediatamente. O formato da entrada esperada deve ser "cheat X", em que X é o número da sala para onde o jogador deseja ir.</li>
+            <li>Implementar uma função para capitalizar o texto na tela adequadamente, ou seja, somente a primeira letra de cada frase deve ser maiúscula.</li>
+        </ol>
+    </section>
+
+    <hr>
+    <footer>
+        <a href="#" class="previous disabled">Anterior</a><a href="../projects.html">Lista de projetos</a><a href="../bounce/bounce.html"  class="next">Próximo</a>
+    </footer>
+</body>
+</html>
