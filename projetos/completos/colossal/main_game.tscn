@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://b658j64turyr4"]
+
+[ext_resource type="Theme" uid="uid://drna4m6eif7tb" path="res://main_theme.tres" id="1_1oj5k"]
+[ext_resource type="Script" uid="uid://csecy1pxml4ja" path="res://main_game.gd" id="2_yx7mw"]
+
+[node name="MainGame" type="Control" unique_id=1993515122]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_1oj5k")
+script = ExtResource("2_yx7mw")
+
+[node name="Label" type="Label" parent="." unique_id=2090912478]
+custom_minimum_size = Vector2(1152, 42)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="." unique_id=1820689888]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+placeholder_text = "Digite seu comando aqui..."
+keep_editing_on_text_submit = true
+
+[connection signal="text_submitted" from="LineEdit" to="." method="_on_line_edit_text_submitted"]

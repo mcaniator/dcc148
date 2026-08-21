@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://bo35bglwjn5sf"]
+
+[ext_resource type="Theme" uid="uid://drna4m6eif7tb" path="res://main_theme.tres" id="1_v6p8y"]
+[ext_resource type="Script" uid="uid://mjll2jopqihu" path="res://title_screen.gd" id="2_ak2if"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1s85s"]
+font_size = 100
+
+[node name="TitleScreen" type="Control" unique_id=339249868]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_v6p8y")
+script = ExtResource("2_ak2if")
+
+[node name="Label" type="Label" parent="." unique_id=1425411559]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -277.0
+offset_top = -143.0
+offset_right = 278.0
+offset_bottom = 124.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Colossal Cave 
+Adventure"
+label_settings = SubResource("LabelSettings_1s85s")
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="." unique_id=246002882]
+layout_mode = 0
+offset_left = 515.0
+offset_top = 523.0
+offset_right = 648.0
+offset_bottom = 565.0
+theme_override_font_sizes/font_size = 32
+text = "INICIAR"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
