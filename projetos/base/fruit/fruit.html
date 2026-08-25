@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Ninja</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/highlightjs-gdscript@master/dist/gdscript.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-gdscript.min.js"></script>
+
+    <!-- <script>
+        hljs.highlightAll();
+    </script> -->
+
+    <link rel="stylesheet" href="../main.css">
+    <script src="../projects.js"></script>
+    <!-- <script src="../headers.js"></script> -->
+</head>
+<body>
+    <h1>Fruit Ninja</h1>
+    <project-step>Neste exemplo, iremos organizar um pouco melhor os arquivos do projeto. Crie um novo projeto e, dentro da pasta gerada pela Godot, crie outras 3 pastas: <strong>cenas</strong>, <strong>sprites</strong> e <strong>scripts</strong>.</project-step>
+    <project-step>
+        Encontre imagens de frutas e bombas para usá-las como assets no jogo. Sugestões:
+        <ul>
+            <li><a href="https://opengameart.org/content/pixel-fruit-pack">https://opengameart.org/content/pixel-fruit-pack</a></li>
+            <li><a href="https://opengameart.org/content/bomb-sprite-vector-image">https://opengameart.org/content/bomb-sprite-vector-image</a></li>
+        </ul>
+    </project-step>
+    <project-step>Crie uma cena com um nó raiz do tipo <strong>Sprite2D</strong> (clicando na opção "Outro Nó") e nomeie-o como "Fruit".</project-step>
+    <project-step>Crie uma segunda cena com um nó raiz do tipo <strong>Node</strong> e dê ao nó o nome de "MainGame".</project-step>
+    <project-step>
+        Adicione um script ao nó raiz da cena principal (selecione a pasta "scripts" na hora de criar o arquivo) e crie variáveis do tipo <code class="language-gdscript">@export</code> para armazenar a cena da fruta e as imagens.
+        <project-code>
+@export var fruit_scene: PackedScene
+
+@export var fruit_list: Array[Texture2D]
+@export var bomb: Texture2D
+        </project-code>
+    </project-step>
+    <project-step>Associe a cena da fruta e as imagens da pasta de sprites às respectivas propriedades geradas no Inspetor da cena principal após a criação das variáveis no passo anterior.</project-step>
+    <project-step>
+        Crie outras 3 variáveis auxiliares para indicar o objeto ativo no momento, a pontuação do jogador e uma flag para identificar se a fruta é ou não é uma bomba.
+        <project-code>
+var active_object: Node2D
+var score: int
+var is_bomb: bool
+        </project-code>
+    </project-step>
+    <project-step>
+        Crie uma função <code class="language-gdscript">new_fruit</code> para instanciar uma nova fruta (ou bomba) em uma posição aleatória.
+        <project-code>
+func new_fruit() -> void:
+	if active_object:
+		active_object.queue_free()
+	
+	active_object = fruit_scene.instantiate()
+	
+	var rand_val = randf_range(0.0, 1.0)
+	if rand_val > 0.8:
+		active_object.texture = bomb
+		is_bomb = true
+	else:
+		active_object.texture = fruit_list.pick_random()
+		is_bomb = false
+	
+	active_object.position.x = randf_range(0, 1000)
+	active_object.position.y = randf_range(0, 600)
+	
+	add_child(active_object)
+        </project-code>
+    </project-step>
+    <project-step>
+        Crie uma outra função, chamada <code class="language-gdscript">cut_fruit</code> para verificar se a fruta é ou não uma bomba. Se for fruta, a função incrementa a pontuação; caso contrário, a pontuação é impressa e zerada. Ao final, uma nova fruta é criada.
+        <project-code>
+func cut_fruit() -> void:
+	if is_bomb:
+		print("Pontuação: " + str(score))
+		score = 0
+	else:
+		score += 1
+	
+	new_fruit()
+        </project-code>
+    </project-step>
+    <project-step>Na função <code class="language-gdscript">_ready</code>, inicialize a pontuação com 0 e chame a função <code class="language-gdscript">new_fruit</code>.</project-step>
+    <project-step>
+        Na função <code class="language-gdscript">_process</code>, inclua um código para verificar se o jogador pressionou a tecla Espaço e, em caso positivo, chamar a função <code class="language-gdscript">cut_fruit</code>.
+        <project-code>
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_accept"):
+		cut_fruit()
+        </project-code>
+    </project-step>
+
+    <section id="exercicios">
+        <h3>Exercícios</h3>
+        <ol>
+            <li>Modifique o código para que não seja necessário destruir e instanciar o objeto repetidas vezes. O jogo deve instanciar uma única cópia da cena da fruta na função <code class="language-gdscript">_ready</code>, armazenar esta cópia em uma variável e apenas alterar a sua textura e sua posição toda vez que uma nova fruta for selecionada.</li>
+            <li>Adicione um novo script ao nó raiz da cena da fruta e, na função <code class="language-gdscript">_process</code>, implemente uma lógica para mover a fruta em um movimento de ascensão e queda. A lógica é muito similar à implementada para o exemplo da bola quicando no projeto da aula anterior.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h3>Detectando o mouse</h3>
+        <project-step>Na cena da fruta, altere o tipo do nó raiz para <strong>Area2D</strong> (clique com o botão direito sobre o nó e selecionar "Alterar Tipo...".</project-step>
+        <project-step step-figure="areaFruit.png" step-figure-caption="Hierarquia da cena da fruta">Adicione como filhos do nó raiz um <strong>Sprite2D</strong> e um <strong>CollisionShape2D</strong>.</project-step>
+        <project-step>No nó <strong>CollisionShape2D</strong>, crie uma geometria do tipo "CircleShape2D" no campo <strong>Shape</strong>. Após a criação da geometria, clique sobre a propriedade para expandir as opções e modifique o raio do círculo para 250 (o tamanho ideal pode variar em função dos assets utilizados).</project-step>
+        <project-step>
+            No script da fruta, defina um novo sinal chamado "hit".
+            <project-code>
+signal hit
+            </project-code>
+        </project-step>
+        <project-step>No Mapa de Entrada das configurações do projeto, inclua uma nova ação associada ao botão esquerdo do mouse.</project-step>
+        <project-step>
+            Selecione o nó raiz (que agora é do tipo <strong>Area2D</strong>) e, na aba de Sinais, conecte o sinal <code class="language-gdscript">mouse_entered</code>. Na função que foi criada no script, adicione um código para emitir o sinal "hit" sempre que o botão esquerdo do mouse for pressionado.
+            <project-code>
+func _on_mouse_entered() -> void:
+	if Input.is_action_pressed("mouse_left"):
+		hit.emit()
+            </project-code>
+        </project-step>
+        <project-step>
+            No script da cena principal, conecte o sinal "hit" emitido pela fruta à função <code class="language-gdscript">cut_fruit</code>. Para isso, inclua a linha de código abaixo no script. O local de inclusão da linha abaixo irá variar em função de você ter ou não feito o Exercício 1.
+            <project-code>
+active_object.connect("hit", cut_fruit)
+            </project-code>
+        </project-step>
+    </section>
+
+    <section>
+        <h3>Exercícios</h3>
+        <ol start="3">
+            <li>Modifique o jogo para que mais de uma fruta possa ser criada ao mesmo tempo. Faça com que uma nova fruta seja gerada a cada X segundos. Você pode usar um acumulador para somar a variável <strong>delta</strong> a cada frame, ou você pode utilizar o nó <a href="https://docs.godotengine.org/en/stable/classes/class_timer.html"><strong>Timer</strong></a>.</li>
+            <li>Inclua um nó do tipo Label na cena principal para exibir a pontuação do jogador.</li>
+            <li>Crie uma tela de game over que permita ao jogador reiniciar o jogo.</li>
+        </ol>
+    </section>
+
+    <hr>
+    <footer>
+        <a href="../bounce/bounce.html" class="previous">Anterior</a><a href="../projects.html">Lista de projetos</a><a href="#"  class="next disabled">Próximo</a>
+    </footer>
+</html>
