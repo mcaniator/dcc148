@@ -9,8 +9,15 @@ img {
     height: auto;
 }
 
+p {
+    overflow-wrap: break-word;
+    min-width: 0;
+}
+
 label {
     padding: 0 10px 0 10px;
+    overflow-wrap: break-word;
+    min-width: 0;
 }
 
 .step {
@@ -18,7 +25,7 @@ label {
     border-radius: 5px;
     border-color: rgb(200, 200, 200);
     padding: 10px;
-    margin: 5px;
+    margin: 5px auto;
     display: grid;
     grid-template-columns: auto 1fr;
 }

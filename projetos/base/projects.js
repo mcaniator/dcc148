@@ -83,7 +83,24 @@ class ProjectCode extends HTMLElement
         shadow.adoptedStyleSheets = [prismSheet];
 
         shadow.innerHTML = `
-            <pre style="background-color: whitesmoke;"><code class="language-gdscript" style="font-size: smaller;"></code></pre>
+            <style>
+                :host {
+                    display: block;
+                    width: 100%;
+                    min-width: 0;
+                    max-width: 100%;
+                }
+
+                pre {
+                    box-sizing: border-box;
+                    width: 100%;
+                    min-width: 0;
+                    max-width: 100%;
+                    overflow-x: auto;
+                    white-space: pre;
+                }
+            </style>
+            <pre><code class="language-gdscript"></code></pre>
             <slot hidden></slot>
         `;
 
