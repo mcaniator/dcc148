@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/highlightjs-gdscript@master/dist/gdscript.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-gdscript.min.js"></script>
+
+    <!-- <script>
+        hljs.highlightAll();
+    </script> -->
+
+    <link rel="stylesheet" href="../main.css">
+    <script src="../projects.js"></script>
+    <!-- <script src="../headers.js"></script> -->
+</head>
+<body>
+    <h1>Flappy Bird</h1>
+    <project-step>Crie um novo projeto e, dentro da pasta gerada pela Godot, crie outras 3 pastas: <strong>scenes</strong>, <strong>sprites</strong> e <strong>scripts</strong>.</project-step>
+    <project-step>Copie para a pasta "sprites" a imagem dos canos disponibilizada na pasta de assets deste passo-a-passo.</project-step>
+    <project-step>Encontre sprites de um pássaro (com frames separados para animação). Sugestão:
+        <ul>
+            <li><a href="https://opengameart.org/content/bevouliin-free-bee-flappy-bird-sprite-sheets">https://opengameart.org/content/bevouliin-free-bee-flappy-bird-sprite-sheets</a></li>
+        </ul>
+    </project-step>
+    <project-step>Crie uma cena com um nó raiz do tipo <strong>Area2D</strong> e nomeie o nó como "Bird". Salve a cena na pasta de cenas.</project-step>
+    <project-step step-figure="birdScene.png" step-figure-caption="Visão da hierarquia da cena do pássaro">Adicione como nós filhos do nó raiz um <strong>AnimatedSprite2D</strong> e um <strong>CollisionShape2D</strong>.</project-step>
+    <project-step>Selecione o nó <strong>AnimatedSprite2D</strong> e crie um novo <strong>SpriteFrames</strong> na propriedade do Inspetor associada.</project-step>
+    <project-step step-figure="spriteFrames.png" step-figure-caption="Área para definir as imagens que compõem os quadros da animação">Clique sobre o SpriteFrames criado para abrir uma nova aba na seção inferior da interface da Godot. Na seção de assets, arraste os frames que compõem o movimento do pássaro para a área principal de "Quadros da Animação".</project-step>
+    <project-step>Altere a escala do sprite (propriedade <strong>Transform/Scale</strong> do nó <strong>AnimatedSprite2D</strong>) para um tamanho razoável em relação ao tamanho da tela (para a imagem sugerida neste documento, uma escala de 0.15 é um valor adequado).</project-step>
+    <project-step step-figure="birdCollisionShape.png" bird-figure-caption="Visão da geometria de colisão associada ao sprite">
+        Selecione o nó <strong>CollisionShape2D</strong> e adicione uma nova <strong>Shape</strong> do tipo "CapsuleShape2D" (ou outra forma que se ajuste melhor à imagem escolhida por você). Use os manipuladores na visualização 2D da cena para ajustar o tamanho da cápsula e girá-la, se necessário.
+        <details>
+            <summary>Observação</summary>
+            <p>O ajuste da geometria não precisa ser necessariamente perfeito. É muito comum o uso de uma geometria ligeramente menor que o sprite para controlar melhor que partes do corpo do objeto devem disparar uma colisão. Discutiremos mais sobre isso na aula sobre detecção de colisão.</p>
+        </details>
+    </project-step>
+    <project-step>Adicione um script ao pássaro (associe o script ao nó raiz da cena) para implementarmos a sua movimentação.</project-step>
+    <project-step>Adicione uma variável <code class="language-gdscript">y_speed</code> para controlar a velocidade vertical do pássaro e uma variável do tipo <code class="language-gdscript">@export</code> para controlar o impulso vertical gerado ao bater as asas. Neste exemplo não há a necessidade de definir uma variável para a gravidade, pois o nó <strong>Area2D</strong> já possui uma propriedade <code class="language-gdscript>gravity"></code> que podemos usar.</project-step>
+
+    <section>
+        <h3>Exercícios</h3>
+        <ol>
+            <li>O pássaro deve cair continuamente em função da gravidade. Na função <code class="language-gdscript">_physics_process</code>, adicione um trecho de código para que o pássaro caia continuamente pela ação da gravidade. É uma lógica similar à que foi usada no Bounce e no Fruit Ninja.</li>
+            <li>A ação da gravidade deve ser combatida pelo jogador ao apertar a tecla Espaço, que tem o propósito de proporcionar um pequeno impulso vertical ao pássaro. Adicione o código necessário a este passo (a lógica é similar à do impulso aplicado à bola quicando no projeto Bounce).</li>
+            <li>Ao apertar a tecla Espaço, faça também com que a animação do bater de asas do pássaro seja tocada. Para isso, chame a função <code class="language-gdscript">play</code> do nó <strong>AnimatedSprite2D</strong>.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h3>Cena do cano</h3>
+        <project-step>Crie uma nova cena e escolha como nó raiz um nó do tipo <strong>Area2D</strong>.</project-step>
+        <project-step step-figure="pipeScene.png" step-figure-caption="Visão da hierarquia da cena do cano">Adicione como filhos um <strong>Sprite2D</strong> e dois nós do tipo <strong>CollisionShape2D</strong>.</project-step>
+        <project-step>Para o nó <strong>Sprite2D</strong>, adicione a imagem dos canos da pasta de sprites.</project-step>
+        <project-step step-figure="pipeCollisionShapes.png" step-figure-caption="Geometrias de colisão definidas para o cano (na imagem, a geometria do cano de cima está selecionada no momento)">Para cada um dos nós <strong>CollisionShape2D</strong>, defina a forma como sendo uma "RectangleShape2D" e ajuste a forma para contornar os canos (uma forma para o cano de cima, e outra para o cano de baixo).</project-step>
+        <project-step>Adicione um script para o cano e adicione uma variável do tipo <code class="language-gdscript">@export</code> para representar a velocidade horizontal dos canos.</project-step>
+    </section>
+
+    <section>
+        <h3>Exercícios</h3>
+        <ol start="4">
+            <li>Na função <code class="language-gdscript">_physics_process</code>, implemente uma lógica para mover o cano continuamente da direita para a esquerda e, ao sair da tela na esquerda, o cano deve ser reposicionado à direita da margem direita da tela e a sua posição em y deve ser randomizada.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h3>Detectando a colisão</h3>
+        <project-step>Na cena do pássaro, selecione o nó raiz e, na aba de Sinais, conecte o sinal <strong>area_entered</strong>.</project-step>
+        <project-step>Na função gerada no script, chame a função <code class="language-gdscript">queue_free</code> para destruir o objeto do pássaro.</project-step>
+    </section>
+
+    <section>
+        <h3>Exercícios</h3>
+        <ol start="5">
+            <li>Introduza um <strong>Label</strong> na tela que mostra, em tempo real, o tempo decorrido em segundos, para medir quanto tempo o jogador conseguiu sobreviver até aquele momento.</li>
+            <li>Implemente uma forma de contar quantos canos o jogador conseguir superar ileso. Para isso, crie um contador e adicione uma terceira geometria de colisão na cena do cano. Esta geometria deve ser um retângulo ocupando o espaço entre os dois canos. Em seguida, altere o sinal conectado de <strong>area_entered</strong> para <strong>area_shape_entered</strong> e use o parâmetro <code class="language-gdscript">area_shape_index</code> para determinar qual foi a geometria que disparou a colisão. Caso seja a nova geometria, aumente o contador; caso contrário, destrua o objeto do jogador.</li>
+        </ol>
+    </section>
+
+    <hr>
+    <footer>
+        <a href="../fruit/fruit.html" class="previous">Anterior</a><a href="../projects.html">Lista de projetos</a><a href="#"  class="next disabled">Próximo</a>
+    </footer>
+</html>
