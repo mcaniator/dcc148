@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cards</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/highlightjs-gdscript@master/dist/gdscript.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-gdscript.min.js"></script>
+
+    <!-- <script>
+        hljs.highlightAll();
+    </script> -->
+
+    <link rel="stylesheet" href="../main.css">
+    <script src="../projects.js"></script>
+    <!-- <script src="../headers.js"></script> -->
+</head>
+<body>
+    <h1>Cards</h1>
+    <project-step>Crie um novo projeto e crie uma cena com um nó raiz do tipo <strong>TextureRect</strong>. Dê ao nó o nome de "Card" e salve a cena.</project-step>
+    <project-step step-figure="cardAlignment.png" step-figure-caption="Opções de alinhamento da carta">Na seção de alinhamento, marque tanto o alinhamento horizontal quanto o vertical como "Preencher" e marque-os para "Expandir" quando necessário.</project-step>
+    <project-step>Deixe a textura vazia por hora e mude a propriedade <strong>Expand Mode</strong> para "Ignore Size".</project-step>
+    <project-step>Mude também o valor de x na propriedade <strong>Custom Maximum Size</strong> para uma largura máxima a ser usada pelas cartas (pode ser a largura das imagens que serão utilizadas).</project-step>
+    
+    <section>
+        <h3>Configurando o tabuleiro</h3>
+        <project-step>Crie uma nova cena com um nó raiz do tipo <strong>HBoxContainer</strong> e dê a ele o nome de "Board". Salve a cena.</project-step>
+        <project-step step-figure="boardFill.png" step-figure-caption="Predefinições de âncora do nó raiz">Assim como feito com a carta, configure o alinhamento do tabuleiro para expandir na horizontal e na vertical. Mude também a predefinição de âncora dele para "Preencher Retângulo".</project-step>
+        <project-step>Este tabuleiro será dividido em duas seções principais: à esquerda será exibida a pontuação, e à direita serão postas as cartas dos jogadores. Para isso, adicione dois nós filhos ao nó raiz: o primeiro do tipo <strong>PanelContainer</strong> e o segundo do tipo <strong>VBoxContainer</strong>.</project-step>
+        <project-step>Para a seção da pontuação (container da esquerda), marque o painel para expandir na horizontal e adicione como filho um outro <strong>VBoxContainer</strong>. Em seguida, como filhos desse container vertical, adicione dois nós do tipo <strong>Label</strong>.</project-step>
+        <project-step></project-step>
+        <project-step>Marque os dois labels criados no passo anterior para expandir na vertical e com alinhamento centralizado.</project-step>
+        <project-step step-figure="boardHierarchy.png" step-figure-caption="Visão da hierarquia de nós da cena do tabuleiro">Para a seção das cartas (container da direita), marque o container para expandir horizontalmente e adicione como filhos 3 grupos de nós do seguinte formato: um nó <strong>PanelContainer</strong> com um filho <strong>HBoxContainer</strong>. A figura abaixo mostra como deve ficar a hierarquia de nós final do tabuleiro. Renomeie os nós criados de acordo com a figura.</project-step>
+        <project-step>Todos os paineis criados no passo anterior também devem ser marcados para expandir verticalmente.</project-step>
+        <project-step step-figure="boardScene.png" step-figure-caption="Resultado final da cena do tabuleiro">Check: a cena final deve ter uma aparência similar à da figura abaixo.</project-step>
+    </section>
+
+    <section>
+        <h3>Scripts</h3>
+        <project-step>Na cena da carta, crie um script, adicione uma variável para armazenar um valor inteiro e crie um sinal chamado <code class="language-gdscript">card_selected</code>.</project-step>
+        <project-step>Selecione o nó raiz e, na aba de Sinais, conecte o evento <code class="language-gdscript">gui_input</code>.</project-step>
+        <project-step>
+            No corpo da função vinculada ao evento conectado, adicione o trecho de código abaixo:
+            <project-code>
+if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true:
+	print("Picked")
+	card_selected.emit(self)
+            </project-code>
+            <details>
+                <summary>Observação</summary>
+                <p>Note que este evento possui um parâmetro (uma referência ao próprio nó). Este parâmetro será utilizado na cena do tabuleiro para modificar o pai do nó na hierarquia.</p>
+            </details>
+        </project-step>
+        <project-step>
+            Na cena do tabuleiro, selecione o nó raiz e crie um script. Defina as seguintes variáveis:
+            <project-code>
+@export var card_scene: PackedScene
+@export var card_list: Array[Texture2D]
+@export var hand_size: int
+
+var cpu_cards = []
+var player_cards = []
+            </project-code>
+        </project-step>
+        <project-step>Assim como no projeto do <a href="../fruit/fruit.html">Fruit Ninja</a>, configure o array de imagens no Inspetor do nó raiz, atribuindo as imagens das cartas ao array "Card List". Adicione também a cena da carta à propriedade "Card Scene".</project-step>
+        <project-step>
+            Selecione o nó <strong>PlayerTable</strong> e, enquanto a segura a tecla Ctrl, arraste-o para a seção das variáveis no script. A Godot irá criar uma referência ao nó conforme indicado abaixo. Faça o mesmo para o nó <strong>PlayerHand</strong>.
+            <project-code>
+@onready var player_table: HBoxContainer = $VBoxContainer2/PlayerPanel/PlayerTable
+@onready var player_hand: HBoxContainer = $VBoxContainer2/PlayerHandPanel/PlayerHand
+            </project-code>
+        </project-step>
+        <project-step>
+            Na função <code class="language-gdscript">_ready</code>, popule as duas listas (<code class="language-gdscript">cpu_cards</code> e <code class="language-gdscript">player_cards</code> com instâncias aleatórias de carta. As cartas do jogador também devem ser adicionadas ao painel da mão do jogador e os nós instanciados devem ser conectados com o sinal <code class="language-gdscript">card_selected</code>.
+            <project-code>
+for i in range(hand_size):
+    cpu_cards.append(card_scene.instantiate())
+    cpu_cards[-1].texture = card_list.pick_random()
+
+for i in range(hand_size):
+    player_cards.append(card_scene.instantiate())
+    player_cards[-1].texture = card_list.pick_random()
+    player_cards[-1].connect("card_selected", on_card_selected)
+    player_hand.add_child(player_cards[-1])
+            </project-code>
+        </project-step>
+        <project-step>
+            Na função <code class="language-gdscript">on_card_selected</code>, mude o nó pai da carta selecionada usando a função <code class="language-gdscript">reparent</code>.
+            <project-code>
+func on_card_selected(card: Control) -> void:
+	card.reparent(player_table)
+            </project-code>
+        </project-step>
+    </section>
+
+    <section>
+        <h3>Exercícios</h3>
+        <ol>
+            <li>Implemente a lógica principal do jogo. Sempre que o jogador selecionar uma carta, o computador também deve sortear uma carta de sua própria mão e incluí-la na sua seção da mesa. Dica: será necessária uma referência à mesa da CPU também.</li>
+            <li>Modifique o código para, ao instanciar uma carta, atribuir um valor à mesma. Para simplificar, use o índice da carta no array <code class="language-gdscript">card_list</code> como o seu valor.</li>
+            <li>Modifique o código para mostrar as pontuações dos jogadores no tabuleiro. A pontuação de um jogador será dada pela soma dos valores das cartas dispostas sobre a mesa.</li>
+            <li>O nó <strong>PanelContainer</strong> é um tipo de container que possui uma style box embutida. Altere as style boxes dos 3 paineis para dar a cada uma delas um estilo distinto.</li>
+            <li>Mude a lista de cartas para uma estrutura de dicionário e associe valores específicos a cada imagem. Use esses valores para computar as pontuações.</li>
+            <li>DESAFIO: ao invés de simplesmente clicar sobre a carta, faça com que o jogador possa selecioná-la e arrastá-la até a mesa.</li>
+        </ol>
+    </section>
+
+    <hr>
+    <footer>
+        <a href="../flappy/flappy.html" class="previous">Anterior</a><a href="../projects.html">Lista de projetos</a><a href="../cards/cards.html"  class="next">Próximo</a>
+    </footer>
+</html>
