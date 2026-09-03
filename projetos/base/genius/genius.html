@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genius</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/highlightjs-gdscript@master/dist/gdscript.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-gdscript.min.js"></script>
+
+    <!-- <script>
+        hljs.highlightAll();
+    </script> -->
+
+    <link rel="stylesheet" href="../main.css">
+    <script src="../projects.js"></script>
+    <!-- <script src="../headers.js"></script> -->
+</head>
+<body>
+    <h1>Genius</h1>
+    <project-step>Crie um novo projeto e copie o conteúdo da pasta de assets deste passo-a-passo para a pasta do projeto gerada pela Godot.</project-step>
+    <project-step>Crie uma cena e escolha como nó raiz um <strong>ColorRect</strong>. Dê ao nó o nome "Button" e salve a cena.</project-step>
+    <project-step>Adicione como nós filhos da raiz um <strong>AudioStreamPlayer2D</strong> e um <strong>PointLight2D</strong>.</project-step>
+    <project-step>Selecione o nó <strong>PointLight2D</strong> e atribua uma nova textura do tipo "GradientTexture2D" no campo <strong>Texture</strong>.</project-step>
+    <project-step>Clique sobre a textura gerada para expandir as propriedades e mude a propriedade <strong>Fill</strong> para "Radial". Altere também os valores de x e y na propriedade <strong>From</strong> (logo abaixo de Fill) para 0.5.</project-step>
+    <project-step step-figure="gradient.png" step-figure-caption="Gradiente usado para o ponto de luz">Clique sobre a propriedade <strong>Gradient</strong> para expandir as opções e inverta a ordem do branco e do preto, de modo a tornar o gradiente como na figura abaixo. Ajuste também o tamanho da textura (no editor 2D ou via propriedades) para envolver completamente o retângulo colorido.</project-step>
+    <project-step>Desabilite a luz desmarcando a propriedade <strong>Light2D/Enabled</strong>.</project-step>
+    <project-step>Selecione o nó raiz e nas opções de dimensionamento do nó para containers (barra superior, ao lado da âncora), marque para Preencher e Expandir, tanto no alinhamento horizontal quanto no vertical.</project-step>
+    <project-step>Adicione um script ao nó raiz e defina uma variável do tipo <strong>AudioStream</strong> marcada como <code class="language-gdscript">@export</code>.</project-step>
+    <project-step>Na função <code class="language-gdscript">_ready</code>, atribua ao campo <code class="language-gdscript">stream</code> do nó <strong>AudioStreamPlayer2D</strong> o conteúdo da variável criada no passo anterior.</project-step>
+    <project-step>
+        Crie uma função para acender a luz por um segundo.
+        <project-code>
+func light_up() -> void:
+	$PointLight2D.enabled = true
+	await get_tree().create_timer(1.0).timeout
+	$PointLight2D.enabled = false
+        </project-code>
+    </project-step>
+    <project-step>
+        Crie uma função para tocar o áudio do botão e acender a luz.
+        <project-code>
+func play() -> void:
+	$AudioStreamPlayer2D.play()
+	light_up()
+        </project-code>
+    </project-step>
+    <project-step>Nas configurações do projeto, crie uma nova ação ligada ao botão esquerdo do mouse chamada "press_button".</project-step>
+    <project-step>
+        Conecte o sinal <code class="language-gdscript">gui_input</code> do nó raiz e ative o botão quando este for clicado.
+        <project-code>
+func _on_gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed("press_button"):
+		play()
+        </project-code>
+    </project-step>
+
+    <section>
+        <h3>Cena principal</h3>
+        <project-step>Crie uma nova cena e escolha como nó raiz um <strong>GridContainer</strong>. Nomeie o nó como "MainGame" e salve a cena.</project-step>
+        <project-step step-figure="mainGameHierarchy.png" step-figure-caption="Visão da hierarquia da cena principal">Instancie 4 filhas da cena do botão.</project-step>
+        <project-step>Selecione o nó raiz e mude a propriedade <strong>Columns</strong> para 2.</project-step>
+        <project-step>Mude a predefinição de âncora do nó raiz para "Centro" e defina um tamanho para o container na propriedade <strong>Size</strong> (no exemplo deste passo-a-passo, foi usado o valor 400 para x e y).</project-step>
+        <project-step step-figure="4buttons.png" step-figure-caption="Visão dos 4 botões na cena principal">Para cada instância, via Inspetor, atribua um dos áudios da pasta de assets à variável exportada anteriormente e atribua uma cor na propriedade <strong>Color</strong>. O resultado da cena deve ser similar ao da figura abaixo.</project-step>
+        <project-step>
+            Adicione um script ao nó raiz e crie as seguintes variáveis:
+            <project-code>
+var buttons: Array # referências aos botões da cena
+var sequence: Array[int] # sequúncia de inteiros que representam os índices dos botões a serem tocados
+var sequence_size: int # número de notas a serem tocadas
+            </project-code>
+        </project-step>
+    </section>
+
+    <section>
+        <h3>Exercícios</h3>
+        <ol>
+            <li>
+                Crie um método <code class="language-gdscript">new_game</code> no script principal conforme descrito abaixo:
+                <project-code>
+func new_game():
+	# limpa a sequência
+	# gera uma nova sequência aleatória de botões
+	# toca os botões na sequência, com intervalo de 1s
+                </project-code>
+            </li>
+            <li>Inclua na cena principal uma música de fundo e um botão de início. Ao clicar no botão, a música deve parar, o botão ficar invisível e o jogo deve ser iniciado.</li>
+            <li>Faça uma função para verificar se a sequência fornecida pelo jogador bate com a sequência gerada pelo jogo. Para detectar quais botões foram pressionados pelo jogador, crie um sinal no script do botão e emita-o sempre que o jogador pressionar o botão. Passe uma referência ao próprio botão como parâmetro do sinal no momento da sua emissão. Em seguida, no script da cena principal, conecte os 4 botões a uma mesma função que recebe um objeto do tipo <code class="language-gdscript">Control</code> como parâmetro e compare esse objeto com as referências armazenadas no array de botões.</li>
+            <li>Faça com que o tamanho da sequência aumente a cada vez que o jogador acertar a sequência. Ao errar, o tamanho da sequência deve ser restaurado para o valor default.</li>
+            <li>Implemente uma animação para a tela de início (antes do jogador pressionar o botão de início), em que os botões acendem aleatoriamente junto com a música.</li>
+            <li>Extra: troque o <strong>ColorRect</strong> da cena do botão por um nó do tipo <strong>Button</strong> e adicione uma nova style box ao botão. Dê a cada botão o estilo que desejar.</li>
+        </ol>
+    </section>
+
+    <hr>
+    <footer>
+        <a href="../cards/cards.html" class="previous">Anterior</a><a href="../projects.html">Lista de projetos</a><a href="#"  class="next disabled">Próximo</a>
+    </footer>
+</html>
