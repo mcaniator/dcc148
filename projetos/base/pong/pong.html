@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/highlightjs-gdscript@master/dist/gdscript.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-gdscript.min.js"></script>
+
+    <!-- <script>
+        hljs.highlightAll();
+    </script> -->
+
+    <link rel="stylesheet" href="../main.css">
+    <script src="../projects.js"></script>
+    <!-- <script src="../headers.js"></script> -->
+</head>
+<body>
+    <h1>Pong</h1>
+    <project-step>Crie um novo projeto e altere a cor de fundo nas configurações do projeto para preto (vá em <em>Projeto/Configurações do Projeto</em>, na seção <em>Renderização/Ambiente</em>, e mude a <strong>Cor de Fundo Padrão</strong>).</project-step>
+    <project-step>Copie o conteúdo da pasta de assets deste passo-a-passo para a pasta do projeto gerada pela Godot.</project-step>
+
+    <section>
+        <h3>A bola</h3>
+        <project-step>Crie uma nova cena com um nó raiz do tipo <strong>Area2D</strong> e dê a ela o nome de <strong>Ball</strong>.</project-step>
+        <project-step step-figure="ballHierarchy.png" step-figure-caption="Visão da hierarquia de nós da cena da bola">Adicione como filhos desta cena (Ctrl+A) dois outros nós: um <strong>Sprite2D</strong> e um <strong>CollisionShape2D</strong>.</project-step>
+        <project-step>No campo <strong>Texture</strong> do Sprite2D, associe o arquivo de imagem "bola.png" (ou outro similar), disponível na pasta "sprites".</project-step>
+        <project-step step-figure="ballCollisionShape2D.png" step-figure-caption="Tela com a visualização 2D da cena, onde é possível editar os limites da forma de colisão">No campo <strong>Shape</strong> do CollisionShape2D, crie um novo recurso do tipo <strong>CircleShape2D</strong> e defina o raio do círculo como 24. Alternativamente, você pode definir o tamanho da forma de colisão visualmente usando a área de trabalho 2D da cena.</project-step>
+        <project-step>Altere a propriedade <strong>Node2D/Transform/Scale</strong> do nó raiz (nó <strong>Ball</strong>), atribuindo 0.5 à escala em x e em y.</project-step>
+        <project-step>Adicione um script ao nó raiz da cena, clicando com o botão direito sobre ele ou clicando no ícone ao lado da caixa de filtro.</project-step>
+        <project-step>Defina uma variável <code class="language-gdscript">float</code> para guardar a velocidade da bola e uma outra variável do tipo <code class="language-gdscript">Vector2</code> para guardar a sua direção de deslocamento.</project-step>
+        <project-step>Defina um sinal <code class="language-gdscript">scored</code> para ser conectado posteriormente na cena principal.</project-step>
+        <project-step>Defina uma variável do tipo <code class="language-gdscript">@export</code> para representar a velocidade inicial da bola.</project-step>
+        <project-step>
+            Conecte o sinal <code class="language-gdscript">area_entered</code> do nó raiz e adicione o código abaixo (os comentários detalham o que o código está fazendo).
+            <project-code>
+func _on_area_entered(area: Area2D) -> void:
+    # Usa a coordenada do centro da tela como referência para saber se a colisão ocorreu na raquete da esquerda ou da direita
+	var player_on_the_left: bool = direction.x < 0
+	
+    # Calcula a distância vertical da bola em relação ao centro da raquete
+	var vertical_distance_from_center: float = position.y - area.position.y
+	var area_shape: CollisionShape2D = area.get_child(1)
+	var area_size: Vector2 = area_shape.shape.get_rect().size * area.scale.y  
+	
+    # O ângulo de deflexão da bola é determinado a partir da distância vertical e do comprimento que vai do centro até a extremidade da raquete.
+    # O ângulo máximo de deflexão é 45 graus (quando a bola bate exatamente na ponta da raquete). Caso ela bata no centro, não há deflexão.
+	var deflection_angle = vertical_distance_from_center / (area_size.y * 0.5) * 45
+	
+    # Dependendo de qual é a raquete, escolhe-se a direção apropriada
+	if player_on_the_left:
+		direction = Vector2.RIGHT
+	else:
+		direction = Vector2.LEFT
+		deflection_angle = -deflection_angle
+	
+    # Obtém o vetor rotacionado pelo ângulo de deflexão calculado (necessária a conversão de graus para radianos)
+	direction = direction.rotated(deg_to_rad(deflection_angle))
+            </project-code>
+        </project-step>
+        <project-step>
+            Na função <code class="language-gdscript">_physics_process</code>, usaremos a função <code class="language-gdscript">translate</code> para mover a bola em função da direção, da velocidade e do delta. Caso a bola atinja as laterais, a função emite o sinal <code class="language-gdscript">scored</code>, passando como parâmetro um valor indicando qual jogador pontuou. Se a bola atingir o topo da tela, a direção da bola é refletida em torno do vetor vertical usando a função <code class="language-gdscript">bounce</code>.
+            <project-code>
+func _physics_process(delta: float) -> void:
+	translate(direction * speed * delta)
+	
+    # Pega as dimensões da tela
+	var viewport: Rect2 = get_viewport_rect()
+	
+	if position.x < viewport.position.x:
+		emit_signal("scored", 2)
+	elif position.x > viewport.end.x:
+		emit_signal("scored", 1)
+	elif position.y < viewport.position.y:
+		direction = direction.bounce(Vector2.DOWN)
+	elif position.y > viewport.end.y:
+		direction = direction.bounce(Vector2.UP)
+            </project-code>
+        </project-step>
+    </section>
+
+    <section>
+        <h3>A raquete</h3>
+        <project-step step-figure="paddleHierarchy.png" step-figure-caption="Visão da hierarquia de nós da cena da raquete">Crie uma nova cena com a mesma estrutura da cena da bola: um nó raiz do tipo <strong>Area2D</strong> e nós filhos dos tipos <strong>Sprite2D</strong> e <strong>CollisionShape2D</strong>. Chamaremos o nó raiz de <strong>Paddle</strong> neste exemplo.</project-step>
+        <project-step>Associe a imagem "barra.png" (ou outra similar) ao campo <strong>Texture</strong> do nó Sprite2D.</project-step>
+        <project-step step-figure="paddleCollisionShape2D.png" step-figure-caption="Visão da geometria de colisão da raquete">No nó CollisionShape2D, altere a propriedade <strong>Shape</strong> para uma geometria do tipo <strong>RectangleShape2D</strong> e ajuste-a (no editor 2D ou alterando a propriedade <strong>Size</strong>) para envolver a forma.</project-step>
+        <project-step>No Mapa de Entrada do projeto, crie as entradas <code class="language-gdscript">"p1_up"</code>, <code class="language-gdscript">"p1_down</code>, <code class="language-gdscript">"p2_up"</code> e <code class="language-gdscript">"p2_down"</code> para representar, respectivamente, a movimentação vertical da raquete da esquerda (teclas W e S) e a movimentação vertical da raquete da direita (setas para cima e para baixo).</project-step>
+        <project-step>Adicione um script ao nó raiz da cena.</project-step>
+        <project-step>
+            Crie duas variáveis do tipo <code class="language-gdscript">@export</code>: a primeira, booleana, para indicar se a raquete é controlada pelo jogador ou não; e a segunda, do tipo <code class="language-gdscript">float</code>, para indicar a velocidade de movimentação da raquete.
+            <project-code>
+@export var cpu: bool
+@export var speed: float
+            </project-code>
+        </project-step>
+        <project-step>
+            Crie duas funções, <code class="language-gdscript">cpu_motion</code> e <code class="language-gdscript">player_motion</code>, para os movimentos controlados pelo computador e pelo jogador, respectivamente. Deixe-as sem implementação por enquanto.
+            <project-code>
+func cpu_motion(delta: float) -> void:
+	pass
+	
+func player_motion(delta: float) -> void:
+	pass
+            </project-code>
+        </project-step>
+        <project-step>
+            Na função <code class="language-gdscript">_physics_process</code>, chame uma das duas funções criadas no passo anterior, dependendo do valor da variável booleana <code class="language-gdscript">cpu</code>.
+            <project-code>
+func _physics_process(delta: float) -> void:
+	if cpu:
+		cpu_motion(delta)
+	else:
+		player_motion(delta)
+            </project-code>
+        </project-step>
+    </section>
+
+    <section>
+        <h3>A cena principal</h3>
+        <project-step>Crie uma nova cena para representar a tela de jogo. Esta cena deve ter como nó raiz um <strong>Node</strong> padrão. Chamaremos o nó de <strong>MainGame</strong>.</project-step>
+        <project-step>Instancie como cenas filhas do nó raiz uma bola e duas raquetes. Posicione a bola no centro da cena e as raquetes em lados opostos, centralizadas na vertical.</project-step>
+        <project-step>Adicione também como filho da raiz um novo nó do tipo <strong>Control</strong>. Este nó deve ser configurado como "Preencher Retângulo" nas predefinições de âncora.</project-step>
+        <project-step>Como filhos do nó criado no passo anterior, adicione um <strong>HBoxContainer</strong> e um outro nó do tipo <strong>Control</strong>. A esse segundo filho dê o nome de "Start".</project-step>
+        <project-step>Marque a predefinição de âncora do HBoxContainer como "Superior Largura Total" e adicione dois filhos do tipo <strong>Label</strong> ao nó. Nomeie-os como <strong>ScoreP1</strong> e <strong>ScoreP2</strong>. Esses labels serão usados para guardar o placar do jogo. Coloque o valor 0 nos campos <strong>Text</strong> de ambos.</project-step>
+        <project-step step-figure="mainScreen.png" step-figure-caption="Visão da tela principal">Como filhos do nó Start, adicione dois outros labels. Nomeie-os como <strong>Title</strong> e <strong>Message</strong>. Posicione-os na tela e altere a propriedade <strong>Text</strong> de ambos de forma a corresponder à figura abaixo. Posicione os demais elementos da cena também de acordo com a figura abaixo.</project-step>
+        <project-step step-figure="mainSceneHierarchy.png" step-figure-caption="Visão da hierarquia de nós da cena principal">Check: a hierarquia de nós da cena principal deve estar como na figura abaixo.</project-step>
+        <project-step>Adicione um script ao nó raiz da cena.</project-step>
+        <project-step>
+            Crie variáveis inteiras para armazenar as pontuações dos dois jogadores e uma variável booleana para indicar se a partida está em andamento ou não.
+            <project-code>
+var playing: bool
+var score_p1: int = 0
+var score_p2: int = 0
+            </project-code>
+        </project-step>
+    </section>
+
+    <section id="exercicios">
+        <h3>Exercícios</h3>
+        <ol>
+            <li>No script da bola, crie uma função <code class="language-gdscript">play</code> para colocar a bola em movimento. Esta função deve sortear uma direção (direita ou esquerda), sortear um ângulo, rotacionar o vetor de direção por esse ângulo (assim como feito na função <code class="language-gdscript">on_area_entered</code>) e atribuir à velocidade da bola a velocidade inicial.</li>
+            <li>No script da bola, crie uma função <code class="language-gdscript">stop</code> para zerar a velocidade da bola e posicioná-la no centro da tela.</li>
+            <li>No script da raquete, implemente a função <code class="language-gdscript">player_motion</code>. A função deve movimentar a raquete na vertical em função da entrada do jogador. Utilize a função <code class="language-gdscript">translate</code>.</li>
+            <li>No script da cena principal, crie uma função <code class="language-gdscript">start_game</code> para iniciar a movimentação da bola, esconder o nó Start (e seus filhos) e marcar a variável booleana <code class="language-gdscript">playing</code> como verdadeira.</li>
+            <li>No script da cena principal, crie uma função <code class="language-gdscript">game_over</code> para parar a bola, zerar o placar, marcar a variável booleana como falsa e exibir novamente o nó Start.</li>
+            <li>No script da cena principal, crie uma função <code class="language-gdscript">next_round</code> para parar a bola, aguardar um segundo e recolocar a bola em movimento.</li>
+            <li>No script da cena principal, conecte o sinal <code class="language-gdscript">scored</code> da bola e use o valor passado como parâmetro para determinar quem pontuou. Dependendo do valor do parâmetro, incremente a pontuação correspondente e atualize os labels na tela. Caso algum dos jogadores chegue a 11 pontos, a função <code class="language-gdscript">game_over</code> deve ser chamada; caso contrário, chamar a função <code class="language-gdscript">next_round</code>.</li>
+            <li>Na função <code class="language-gdscript">_process</code> do script da cena principal, chame a função <code class="language-gdscript">start_game</code> caso o jogador pressione qualquer tecla (use <code class="language-gdscript">Input.is_anything_pressed()</code>) e o jogo ainda não tenha sido iniciado.</li>
+            <li>No script da cena principal, faça com que a velocidade da bola aumente a cada raquetada, e seja reinicializada para a velocidade inicial após um ponto.</li>
+            <li>No script da raquete, implemente a função <code class="language-gdscript">cpu_motion</code>. Faça com que a raquete do computador acompanhe o movimento da bola de forma perfeita.</li>
+            <li>Altere a função anterior para que a raquete do computador se mova com uma velocidade condizente com algum parâmetro de dificuldade.</li>
+            <li>Extra: Desenhe uma linha vertical no centro da tela. Para isso, crie uma função, conecte-a com o sinal <code class="language-gdscript">draw</code> do nó HUD e, no corpo da função, chame a função <code class="language-gdscript">draw_dashed_line</code> vinculada ao nó HUD.</li>
+        </ol>
+    </section>
+
+    <hr>
+    <footer>
+        <a href="../genius/genius.html" class="previous">Anterior</a><a href="../projects.html">Lista de projetos</a><a href="#"  class="next disabled">Próximo</a>
+    </footer>
+
+</body>
+</html>
