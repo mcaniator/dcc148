@@ -92,7 +92,7 @@ func _physics_process(delta: float) -> void:
         <project-step step-figure="paddleHierarchy.png" step-figure-caption="Visão da hierarquia de nós da cena da raquete">Crie uma nova cena com a mesma estrutura da cena da bola: um nó raiz do tipo <strong>Area2D</strong> e nós filhos dos tipos <strong>Sprite2D</strong> e <strong>CollisionShape2D</strong>. Chamaremos o nó raiz de <strong>Paddle</strong> neste exemplo.</project-step>
         <project-step>Associe a imagem "barra.png" (ou outra similar) ao campo <strong>Texture</strong> do nó Sprite2D.</project-step>
         <project-step step-figure="paddleCollisionShape2D.png" step-figure-caption="Visão da geometria de colisão da raquete">No nó CollisionShape2D, altere a propriedade <strong>Shape</strong> para uma geometria do tipo <strong>RectangleShape2D</strong> e ajuste-a (no editor 2D ou alterando a propriedade <strong>Size</strong>) para envolver a forma.</project-step>
-        <project-step>No Mapa de Entrada do projeto, crie as entradas <code class="language-gdscript">"p1_up"</code>, <code class="language-gdscript">"p1_down</code>, <code class="language-gdscript">"p2_up"</code> e <code class="language-gdscript">"p2_down"</code> para representar, respectivamente, a movimentação vertical da raquete da esquerda (teclas W e S) e a movimentação vertical da raquete da direita (setas para cima e para baixo).</project-step>
+        <project-step>No Mapa de Entrada do projeto, crie as entradas <code class="language-gdscript">"p1_up"</code>, <code class="language-gdscript">"p1_down"</code>, <code class="language-gdscript">"p2_up"</code> e <code class="language-gdscript">"p2_down"</code> para representar, respectivamente, a movimentação vertical da raquete da esquerda (teclas W e S) e a movimentação vertical da raquete da direita (setas para cima e para baixo).</project-step>
         <project-step>Adicione um script ao nó raiz da cena.</project-step>
         <project-step>
             Crie duas variáveis do tipo <code class="language-gdscript">@export</code>: a primeira, booleana, para indicar se a raquete é controlada pelo jogador ou não; e a segunda, do tipo <code class="language-gdscript">float</code>, para indicar a velocidade de movimentação da raquete.
@@ -163,7 +163,7 @@ var score_p2: int = 0
 
     <hr>
     <footer>
-        <a href="../genius/genius.html" class="previous">Anterior</a><a href="../projects.html">Lista de projetos</a><a href="#"  class="next disabled">Próximo</a>
+        <a href="../genius/genius.html" class="previous">Anterior</a><a href="../projects.html">Lista de projetos</a><a href="../bullet/bullet.html"  class="next">Próximo</a>
     </footer>
 
 </body>

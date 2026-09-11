@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bullet Hell</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/highlightjs-gdscript@master/dist/gdscript.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-gdscript.min.js"></script>
+
+    <!-- <script>
+        hljs.highlightAll();
+    </script> -->
+
+    <link rel="stylesheet" href="../main.css">
+    <script src="../projects.js"></script>
+    <!-- <script src="../headers.js"></script> -->
+</head>
+<body>
+    <h1>Bullet Hell</h1>
+    <project-step>Crie um novo projeto e crie duas cenas: uma para representar a nave do jogador e outra para representar os projéteis. Ambas as cenas devem ter um nó raiz do tipo <strong>Area2D</strong> e filhos dos tipos <strong>Sprite2D</strong> e <strong>CollisionShape2D</strong>.</project-step>
+    <project-step>Escolha alguns assets para representar tanto a nave quanto o projétil.</project-step>
+    <project-step>
+        Adicione um script ao nó raiz da cena do projétil e defina um sinal para saber se o projétil atingiu algo ou se saiu de cena, além de uma variável para defiir a sua velocidade.
+        <project-code>
+signal hit_or_lost
+
+@export var speed: float
+        </project-code>
+    </project-step>
+    <project-step>Conecte o sinal <code class="language-gdscript">area_entered</code> do nó raiz e emita o sinal <code class="language-gdscript">hit_or_lost</code> no corpo da função conectada.</project-step>
+    <project-step step-figure="collisionLayers.png" step-figure-caption="Configuração dos layers de colisão do projétil">Para que o projétil afete somente os inimigos, e não o jogador, mude os layers de colisão do projétil da forma mostrada na figura abaixo. Opcionalmente, você pode renomear os layers clicando nos três pontos ao lado das camadas.</project-step>
+    <project-step>
+        Na função <code class="language-gdscript">_physics_process</code>, mova o projétil para a direita utilizando o seu sistema de coordenadas <strong>local</strong>. Caso o projétil tenha saído dos limites da tela, emita o sinal <code class="language-gdscript">hit_or_lost</code>.
+        <project-code>
+func _physics_process(delta: float) -> void:
+	translate(transform.x * speed * delta)
+
+	if not get_viewport_rect().has_point(position):
+		hit_or_lost.emit()
+        </project-code>
+    </project-step>
+
+    <section>
+        <h3>Exercícios</h3>
+        <ol>
+            <li>Adicione um script ao jogador e implemente o seu movimento. A nave deve poder se mover nas 4 direções. Utilize a função <code class="language-gdscript">translate</code> e atente-se para que não ocorra variação de velocidade ao se mover na diagonal.</li>
+            <li>Adicione uma opção para o jogador atirar usando, por exemplo, a tecla Espaço. Ao fazê-lo, deve ser instanciado um projétil na posição corrente do jogador. Use a função <code class="language-gdscript">Input.is_action_just_pressed</code> para que o jogador precise pressionar repetidas vezes a tecla para disparar vários tiros.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h3>Object Pool</h3>
+        <project-step>
+            Crie um novo script, desvinculado de qualquer nó. Para isso, na tela dos Scripts, selecione "Arquivo/Novo Script". Criaremos uma classe chamada ObjectPool. O cabeçalho do arquivo deve estar como no trecho de código seguir:
+            <project-code>
+class_name ObjectPool
+extends Node
+            </project-code>
+        </project-step>
+        <project-step>
+            Crie duas variáveis do tipo <code class="language-gdscript">@export</code> para armazenar o tamanho da pool e a cena a ser usada para instanciar os objetos. Crie também um array de objetos do tipo <strong>Node2D</strong> e um inteiro para armazenar quantos objetos estão disponíveis.
+            <project-code>
+@export var object_scene: PackedScene
+@export var pool_size: int
+
+var objects: Array[Node2D]
+var available: int
+            </project-code>
+        </project-step>
+        <project-step>
+            Na função <code class="language-gdscript">_ready</code>, pré-aloque o vetor e instancie todas as cópias da cena solicitadas. Cada instância deve ser instanciada com as funções de atualização do nó desabilitadas e marcadas como invisíveis. Apesar disso, toda instância deve ser adicionada à cena. O número de objetos disponíveis na pool, inicialmente, é o tamanho da pool.
+            <project-code>
+func _ready() -> void:
+	objects.resize(pool_size)
+	for i in range(pool_size):
+		objects[i] = object_scene.instantiate()
+		objects[i].process_mode = Node.PROCESS_MODE_DISABLED
+		objects[i].hide()
+		add_child(objects[i])
+	available = pool_size
+            </project-code>
+        </project-step>
+        <project-step>
+            Crie uma função <code class="language-gdscript">get_from_pool</code> para retornar um objeto disponível, caso exista. Para evitar realocação do array, os objetos são apenas reposicionados no array, trocando o primeiro elemento com o último disponível e marcando a última posição como nula. Assim, funções como <code class="language-gdscript">pop_at</code>, <code class="language-gdscript">append</code> e outras similares não foram usadas aqui.
+            <project-code>
+func get_from_pool() -> Node2D:
+	var obj = objects[0]
+	
+	available -= 1
+	objects[0] = objects[available]
+	objects[available] = null
+	
+	if obj:
+		obj.show()
+		obj.process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	return obj
+            </project-code>
+        </project-step>
+
+        <project-step>
+            Crie uma função para devolver o objeto à pool. Esta função deve desabilitar o objeto novamente, reintroduzi-lo no array e incrementar a quantidade de disponíveis.
+            <project-code>
+func return_to_pool(obj: Node2D) -> void:
+	obj.process_mode = Node.PROCESS_MODE_DISABLED
+	obj.hide()
+	objects[available] = obj
+	available += 1
+            </project-code>
+        </project-step>
+
+        <project-step>Agora que criamos esta classe derivada de <strong>Node</strong>, ela aparece como um nó customizado na lista de nós para incluirmos na cena. Assim, na cena do jogador, adicione um nó filho do tipo <strong>ObjectPool</strong>. Renomeie-o para "BulletPool" e configure os parâmetros no Inspetor.</project-step>
+        <project-step>Crie uma cena principal e adicione instancie o jogador como uma cena filha. Execute o projeto para verificar se o jogador consegue movimentar a nave e disparar os tiros continuamente.</project-step>
+    </section>
+
+    <section>
+        <h3>Exercícios</h3>
+        <ol start="3">
+            <li>Modifique o código do Exercício 2 para, ao invés de instanciar um objeto ao atirar, obter um novo projétil da pool e posicioná-lo no local onde o jogador se encontra.</li>
+            <li>Crie uma cena para representar um inimigo. Este inimigo deve surgir à direita da tela e se movimentar continuamente para a esquerda. Ao colidir com um projétil ou com o jogador, o inimigo deve ser destruído. No caso de colisão com o jogador, o jogador também deve ser destruído.</li>
+            <li>Altere a cena principal para incluir uma pool de inimigos. Os inimigos devem surgir continuamente à direita da tela a cada 1 segundo, em posições aleatórias no eixo y.</li>
+            <li>Modifique o código de atirar do jogador para que seja possível apenas segurar a tecla Espaço para disparar vários tiros. Será necessário implementar um cooldown para que os tiros não sejam disparados todos em uma rajada única.</li>
+            <li>Inclua um novo tipo de inimigo que também atira contra o jogador.</li>
+        </ol>
+    </section>
+
+    <hr>
+    <footer>
+        <a href="../genius/genius.html" class="previous">Anterior</a><a href="../projects.html">Lista de projetos</a><a href="#"  class="next disabled">Próximo</a>
+    </footer>
+
+</body>
+</html>
